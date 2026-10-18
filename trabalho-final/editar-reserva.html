@@ -39,7 +39,7 @@
 
       <h1>Editar reserva</h1>
 
-      <form action="reservas.html" method="post" class="formulario">
+      <form action="reservas.html" method="get" class="formulario">
 
         <div class="campos">
 
@@ -64,7 +64,7 @@
 
         </div>
 
-        <p class="total">Total das diárias: <strong>R$ 40,00</strong></p>
+        <p class="total">Total das diárias: <strong id="total">R$ 40,00</strong></p>
 
         <div class="acoes">
           <input type="submit" value="Salvar">
@@ -77,5 +77,8 @@
 
   </div>
 
+  <script src="js/dados.js"></script>
+  <script src="js/utilitarios.js"></script>
+  <script src="js/reservas.js"></script>
 </body>
 </html>
