@@ -53,8 +53,47 @@ const preencherFormularioDaReserva = (reserva) => {
   document.querySelector('#total').textContent = reserva.total;
 };
 
+const linhaDaReserva = ({ id, pet, chegada, partida, status, total }) => `
+  <td><input type="checkbox" name="selecionadas" value="${id}" title="Selecionar reserva"></td>
+  <td>${id}</td>
+  <td>${pet}</td>
+  <td>${formatarData(chegada)}</td>
+  <td>${formatarData(partida)}</td>
+  <td><div class="etiqueta ${classesDeStatus[status]}">${status}</div></td>
+  <td class="valor">${total}</td>
+  <td>
+    <a href="editar-reserva.html">Editar</a>
+    <a href="ver-reserva.html">Visualizar</a>
+  </td>
+`;
+
+
+const pesquisarReservas = () => {
+  const id = valorPesquisado('id');
+  const chegada = valorPesquisado('chegada');
+  const partida = valorPesquisado('partida');
+  const proprietario = valorPesquisado('proprietario');
+  const totalMinimo = valorPesquisado('total_min');
+  const totalMaximo = valorPesquisado('total_max');
+  const status = valorPesquisado('status');
+  const pet = valorPesquisado('pet');
+
+  const encontradas = reservas.filter((reserva) =>
+    contem(reserva.id, id) &&
+    (chegada === '' || reserva.chegada >= chegada) &&
+    (partida === '' || reserva.partida <= partida) &&
+    contem(reserva.proprietario, proprietario) &&
+    (totalMinimo === '' || reserva.valor >= parseFloat(totalMinimo)) &&
+    (totalMaximo === '' || reserva.valor <= parseFloat(totalMaximo)) &&
+    (status === '' || classesDeStatus[reserva.status] === status) &&
+    contem(reserva.pet, pet)
+  );
+
+  mostrarNaTabela(encontradas, linhaDaReserva, 'reserva', 'Nenhuma reserva encontrada.');
+};
+
 if (document.querySelector('input[name="selecionadas"]')) {
-  guardarSelecaoDaTabela('reserva');
+  ligarPesquisa(pesquisarReservas);
 }
 
 if (document.querySelector('#ficha-pet')) {
