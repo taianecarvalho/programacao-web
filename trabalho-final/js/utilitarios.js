@@ -70,7 +70,48 @@ const mostrarNaFicha = (campo, valor) => {
   document.querySelector(`#ficha-${campo}`).textContent = valor || '-';
 };
 
+const carregarDados = (chave, dadosIniciais) => {
+  const salvos = localStorage.getItem(chave);
+  if (salvos) {
+    return JSON.parse(salvos);
+  }
+  return dadosIniciais;
+};
+
+const salvarDados = (chave, dados) => {
+  localStorage.setItem(chave, JSON.stringify(dados));
+};
+
+const novoId = (lista) => {
+  if (lista.length === 0) {
+    return '1';
+  }
+  return `${parseInt(lista[lista.length - 1].id) + 1}`;
+};
+
+const formatarValor = (valor) => `R$ ${valor.toFixed(2).replace('.', ',')}`;
+
+const valorDoCampo = (nome) => document.querySelector(`[name="${nome}"]`).value;
+
+const estaNaTela = (titulo) => document.querySelector('h1').textContent === titulo;
+
+const aoSalvar = (salvar) => {
+  document.querySelector('form.formulario').addEventListener('submit', salvar);
+};
+
+const aoDeletar = (deletar) => {
+  const botaoDeletar = document.querySelector('.acoes-topo a:last-child');
+  botaoDeletar.addEventListener('click', deletar);
+};
+
+const pets = carregarDados('pets', petsIniciais);
+const reservas = carregarDados('reservas', reservasIniciais);
+const usuarios = carregarDados('usuarios', usuariosIniciais);
+const configuracoes = carregarDados('configuracoes', configuracoesIniciais);
+
 const sair = document.querySelector('.topo a[href="index.html"]');
 sair.addEventListener('click', () => {
-  localStorage.clear();
+  localStorage.removeItem('pet');
+  localStorage.removeItem('reserva');
+  localStorage.removeItem('usuario');
 });

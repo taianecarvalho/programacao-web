@@ -1,4 +1,4 @@
-const pets = [
+const petsIniciais = [
   {
     id: '12349984501',
     nome: 'Anya',
@@ -21,7 +21,7 @@ const pets = [
   }
 ];
 
-const reservas = [
+const reservasIniciais = [
   {
     id: '1234099871',
     pet: 'Anya',
@@ -76,7 +76,7 @@ const reservas = [
   }
 ];
 
-const usuarios = [
+const usuariosIniciais = [
   {
     id: '9087651',
     nome: 'Taiane',
@@ -114,6 +114,8 @@ const usuarios = [
     status: 'inativo'
   }
 ];
+
+const configuracoesIniciais = { diaria: 8, vagas: 20 };
 
 const nomesDeTipo = { cachorro: 'Cachorro', gato: 'Gato' };
 
