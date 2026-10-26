@@ -119,6 +119,10 @@ const nomesDeTipo = { cachorro: 'Cachorro', gato: 'Gato' };
 
 const nomesDeTamanho = { pequeno: 'Pequeno', medio: 'Médio', grande: 'Grande' };
 
+const nomesDeFuncao = { gerente: 'Gerente', funcionario: 'Funcionário', cliente: 'Cliente' };
+
+const nomesDeSituacao = { ativo: 'Ativo', inativo: 'Inativo' };
+
 const classesDeStatus = {
   'Reservada': 'reservada',
   'Em progresso': 'progresso',

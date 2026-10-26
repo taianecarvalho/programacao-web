@@ -11,14 +11,6 @@ const guardarAoClicar = (links, chave, id) => {
   });
 };
 
-const guardarSelecaoDaTabela = (chave) => {
-  const linhas = document.querySelectorAll('tbody tr');
-  linhas.forEach((linha) => {
-    const id = linha.children[1].textContent;
-    guardarAoClicar(linha.querySelectorAll('a'), chave, id);
-  });
-};
-
 const mostrarNaTabela = (lista, montarLinha, chave, mensagemVazia) => {
   const corpo = document.querySelector('tbody');
   const aviso = document.querySelector('#aviso');
