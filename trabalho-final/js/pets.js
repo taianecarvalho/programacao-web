@@ -45,8 +45,37 @@ const preencherFormularioDoPet = (pet) => {
   `;
 };
 
+const linhaDoPet = ({ id, nome, tipo, raca, tamanho }) => `
+  <td><input type="checkbox" name="selecionados" value="${id}" title="Selecionar pet"></td>
+  <td>${id}</td>
+  <td>${nome}</td>
+  <td>${nomesDeTipo[tipo]}</td>
+  <td>${raca}</td>
+  <td>${nomesDeTamanho[tamanho]}</td>
+  <td>
+    <a href="editar-pet.html">Editar</a>
+    <a href="ver-pet.html">Visualizar</a>
+  </td>
+`;
+
+const pesquisarPets = () => {
+  const id = valorPesquisado('id');
+  const raca = valorPesquisado('raca');
+  const nome = valorPesquisado('nome');
+  const tamanho = valorPesquisado('tamanho');
+
+  const encontrados = pets.filter((pet) =>
+    contem(pet.id, id) &&
+    contem(pet.raca, raca) &&
+    contem(pet.nome, nome) &&
+    (tamanho === '' || pet.tamanho === tamanho)
+  );
+
+  mostrarNaTabela(encontrados, linhaDoPet, 'pet', 'Nenhum pet encontrado.');
+};
+
 if (document.querySelector('input[name="selecionados"]')) {
-  guardarSelecaoDaTabela('pet');
+  ligarPesquisa(pesquisarPets);
 }
 
 if (document.querySelector('#ficha-nome')) {

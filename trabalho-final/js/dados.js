@@ -114,6 +114,8 @@ const usuarios = [
 
 const nomesDeTipo = { cachorro: 'Cachorro', gato: 'Gato' };
 
+const nomesDeTamanho = { pequeno: 'Pequeno', medio: 'Médio', grande: 'Grande' };
+
 const classesDeStatus = {
   'Reservada': 'reservada',
   'Em progresso': 'progresso',
