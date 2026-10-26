@@ -19,6 +19,41 @@ const guardarSelecaoDaTabela = (chave) => {
   });
 };
 
+const mostrarNaTabela = (lista, montarLinha, chave, mensagemVazia) => {
+  const corpo = document.querySelector('tbody');
+  const aviso = document.querySelector('#aviso');
+  corpo.innerHTML = '';
+  aviso.textContent = '';
+
+  if (lista.length === 0) {
+    aviso.textContent = mensagemVazia;
+    return;
+  }
+
+  lista.forEach((item) => {
+    const linha = document.createElement('tr');
+    linha.innerHTML = montarLinha(item);
+    guardarAoClicar(linha.querySelectorAll('a'), chave, item.id);
+    corpo.appendChild(linha);
+  });
+};
+
+const contem = (texto, busca) => texto.toLowerCase().indexOf(busca.toLowerCase()) !== -1;
+
+const valorPesquisado = (nome) => document.querySelector(`form [name="${nome}"]`).value;
+
+const ligarPesquisa = (pesquisar) => {
+  const [botaoPesquisar, botaoLimpar] = document.querySelectorAll('form .acoes input');
+  botaoPesquisar.addEventListener('click', pesquisar);
+  botaoLimpar.addEventListener('click', () => {
+    document.querySelectorAll('form [name]').forEach((campo) => {
+      campo.value = '';
+    });
+    pesquisar();
+  });
+  pesquisar();
+};
+
 const buscarSelecionado = (lista, chave) => {
   const id = localStorage.getItem(chave);
   return lista.find((item) => item.id === id) || lista[0];

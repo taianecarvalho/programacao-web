@@ -250,7 +250,8 @@ textarea {
 
 input[type="submit"],
 input[type="reset"],
-input[type="image"] {
+input[type="image"],
+input.botao {
   width: auto;
   margin-top: 0;
 }
