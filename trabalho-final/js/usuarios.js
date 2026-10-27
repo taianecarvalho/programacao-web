@@ -17,8 +17,40 @@ const linhaDoUsuario = ({ id, nome, sobrenome, email, telefone, funcao, status }
   <td><div class="etiqueta ${status}">${nomesDeSituacao[status]}</div></td>
   <td>
     <a href="editar-usuario.html">Editar</a>
+    <a href="usuarios.html">Remover</a>
   </td>
 `;
+
+const lerFormularioDoUsuario = (usuario) => {
+  usuario.email = valorDoCampo('email');
+  usuario.nome = valorDoCampo('nome');
+  usuario.sobrenome = valorDoCampo('sobrenome');
+  usuario.telefone = valorDoCampo('telefone');
+  usuario.funcao = valorDoCampo('funcao');
+  usuario.status = valorDoCampo('status');
+};
+
+const cadastrarUsuario = () => {
+  const usuario = { id: novoId(usuarios) };
+  lerFormularioDoUsuario(usuario);
+  usuarios.push(usuario);
+  salvarDados('usuarios', usuarios);
+};
+
+const atualizarUsuario = () => {
+  lerFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
+  salvarDados('usuarios', usuarios);
+};
+
+const ligarRemocao = () => {
+  document.querySelectorAll('tbody a[href="usuarios.html"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const usuario = buscarSelecionado(usuarios, 'usuario');
+      const restantes = usuarios.filter((item) => item.id !== usuario.id);
+      salvarDados('usuarios', restantes);
+    });
+  });
+};
 
 const pesquisarUsuarios = () => {
   const id = valorPesquisado('id');
@@ -36,13 +68,18 @@ const pesquisarUsuarios = () => {
   );
 
   mostrarNaTabela(encontrados, linhaDoUsuario, 'usuario', 'Nenhum usuário encontrado.');
+  ligarRemocao();
 };
 
 if (document.querySelector('input[name="selecionados"]')) {
   ligarPesquisa(pesquisarUsuarios);
 }
 
-const tituloDaTela = document.querySelector('h1');
-if (tituloDaTela.textContent === 'Editar Usuário') {
+if (estaNaTela('Novo Usuário')) {
+  aoSalvar(cadastrarUsuario);
+}
+
+if (estaNaTela('Editar Usuário')) {
   preencherFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
+  aoSalvar(atualizarUsuario);
 }
