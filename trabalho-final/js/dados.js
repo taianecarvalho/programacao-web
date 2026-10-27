@@ -128,5 +128,6 @@ const nomesDeSituacao = { ativo: 'Ativo', inativo: 'Inativo' };
 const classesDeStatus = {
   'Reservada': 'reservada',
   'Em progresso': 'progresso',
+  'Cancelada': 'cancelada',
   'Finalizada': 'finalizada'
 };

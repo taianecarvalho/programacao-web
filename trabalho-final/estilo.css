@@ -493,6 +493,16 @@ td a:hover {
   background-color: #eaedf7;
 }
 
+.etiqueta.cancelada {
+  color: #a32d2d;
+  border-color: #a32d2d;
+  background-color: #f7eaea;
+}
+
+.oculto {
+  display: none;
+}
+
 .etiqueta.ativo,
 .etiqueta.inativo {
   min-width: 80px;

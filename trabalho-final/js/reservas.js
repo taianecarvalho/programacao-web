@@ -42,14 +42,38 @@ const mostrarReserva = (reserva) => {
   document.querySelector('#ficha-status').innerHTML =
     `<div class="etiqueta ${classesDeStatus[reserva.status]}">${reserva.status}</div>`;
 
+  mostrarRecibo(reserva.recibo);
+  mostrarImagensDaReserva(reserva.imagens);
+};
+
+const mostrarRecibo = (arquivo) => {
   const recibo = document.querySelector('#ficha-recibo');
-  if (reserva.recibo) {
-    recibo.innerHTML = `<a href="${reserva.recibo}" target="_blank">${reserva.recibo}</a>`;
+  if (arquivo) {
+    recibo.innerHTML = `<a href="${arquivo}" target="_blank">${arquivo}</a>`;
   } else {
     recibo.textContent = '-';
   }
+};
 
-  mostrarImagensDaReserva(reserva.imagens);
+const mostrarEstadoDaReserva = () => {
+  const status = valorDoCampo('status');
+  const progresso = document.querySelector('#estado-progresso');
+  const finalizada = document.querySelector('#estado-finalizada');
+
+  progresso.classList.add('oculto');
+  finalizada.classList.add('oculto');
+
+  if (status === 'Em progresso') {
+    progresso.classList.remove('oculto');
+  }
+  if (status === 'Finalizada') {
+    finalizada.classList.remove('oculto');
+  }
+};
+
+const ligarEstado = () => {
+  document.querySelector('select[name="status"]').addEventListener('change', mostrarEstadoDaReserva);
+  mostrarEstadoDaReserva();
 };
 
 const listarPetsNoCampo = () => {
@@ -88,6 +112,10 @@ const preencherFormularioDaReserva = (reserva) => {
   preencherTexto('chegada', reserva.chegada);
   preencherTexto('partida', reserva.partida);
   preencherAreaDeTexto('notas', reserva.notas);
+  preencherLista('status', reserva.status);
+  preencherAreaDeTexto('anotacoes', reserva.anotacoes);
+  mostrarImagensDaReserva(reserva.imagens);
+  mostrarRecibo(reserva.recibo);
 };
 
 const lerFormularioDaReserva = (reserva) => {
@@ -120,6 +148,8 @@ const atualizarReserva = () => {
   const reserva = buscarSelecionado(reservas, 'reserva');
   lerFormularioDaReserva(reserva);
   reserva.proprietario = valorDoCampo('proprietario');
+  reserva.status = valorDoCampo('status');
+  reserva.anotacoes = valorDoCampo('anotacoes');
   salvarDados('reservas', reservas);
 };
 
@@ -186,6 +216,7 @@ if (estaNaTela('Fazer reserva')) {
 if (estaNaTela('Editar reserva')) {
   listarPetsNoCampo();
   preencherFormularioDaReserva(buscarSelecionado(reservas, 'reserva'));
+  ligarEstado();
   ligarTotal();
   aoSalvar(atualizarReserva);
 }

@@ -64,6 +64,33 @@
             <textarea name="notas" rows="5">Anya come ração seca duas vezes ao dia e passeia de manhã.</textarea>
           </label>
 
+          <label>Status *
+            <select name="status" required>
+              <option value="Reservada">Reservada</option>
+              <option value="Em progresso">Em progresso</option>
+              <option value="Cancelada">Cancelada</option>
+              <option value="Finalizada">Finalizada</option>
+            </select>
+          </label>
+
+          <div id="estado-progresso" class="oculto">
+            <label class="largo">Anotações do funcionário
+              <textarea name="anotacoes" rows="4"></textarea>
+            </label>
+
+            <label class="largo">Imagens
+              <input type="file" name="imagens" accept="image/*">
+            </label>
+            <div id="ficha-imagens"></div>
+          </div>
+
+          <div id="estado-finalizada" class="oculto">
+            <label class="largo">Adicionar nota fiscal
+              <input type="file" name="nota" accept="application/pdf">
+            </label>
+            <p>Recibo: <span id="ficha-recibo"></span></p>
+          </div>
+
         </div>
 
         <p class="total">Total das diárias: <strong id="total">R$ 40,00</strong></p>
