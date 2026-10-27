@@ -85,6 +85,41 @@ const criarConta = () => {
   salvarDados('usuarios', usuarios);
 };
 
+const idsMarcados = () => {
+  const marcados = [];
+  document.querySelectorAll('input[name="selecionados"]').forEach((caixa) => {
+    if (caixa.checked) {
+      marcados.push(caixa.value);
+    }
+  });
+  return marcados;
+};
+
+const estaMarcado = (usuario, marcados) => marcados.indexOf(usuario.id) !== -1;
+
+const mudarStatusDosMarcados = (status) => {
+  const marcados = idsMarcados();
+  usuarios.forEach((usuario) => {
+    if (estaMarcado(usuario, marcados)) {
+      usuario.status = status;
+    }
+  });
+  salvarDados('usuarios', usuarios);
+};
+
+const removerMarcados = () => {
+  const marcados = idsMarcados();
+  const restantes = usuarios.filter((usuario) => !estaMarcado(usuario, marcados));
+  salvarDados('usuarios', restantes);
+};
+
+const ligarAcoesDosMarcados = () => {
+  const [botaoAtivar, botaoInativar, botaoRemover] = document.querySelectorAll('input[name="acao"]');
+  botaoAtivar.addEventListener('click', () => mudarStatusDosMarcados('ativo'));
+  botaoInativar.addEventListener('click', () => mudarStatusDosMarcados('inativo'));
+  botaoRemover.addEventListener('click', removerMarcados);
+};
+
 const ligarRemocao = () => {
   document.querySelectorAll('tbody a[href="usuarios.html"]').forEach((link) => {
     link.addEventListener('click', () => {
@@ -143,6 +178,7 @@ const ligarVisualizacao = () => {
 
 if (document.querySelector('input[name="selecionados"]')) {
   ligarVisualizacao();
+  ligarAcoesDosMarcados();
   ligarPesquisa(pesquisarUsuarios);
 }
 
