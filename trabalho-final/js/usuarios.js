@@ -57,15 +57,38 @@ const cadastrarUsuario = () => {
   salvarDados('usuarios', usuarios);
 };
 
+const nomeCompleto = ({ nome, sobrenome }) => `${nome} ${sobrenome}`;
+
+const trocarProprietario = (nomeAntigo, nomeNovo) => {
+  pets.forEach((pet) => {
+    if (pet.proprietario === nomeAntigo) {
+      pet.proprietario = nomeNovo;
+    }
+  });
+  reservas.forEach((reserva) => {
+    if (reserva.proprietario === nomeAntigo) {
+      reserva.proprietario = nomeNovo;
+    }
+  });
+  salvarDados('pets', pets);
+  salvarDados('reservas', reservas);
+};
+
 const atualizarUsuario = () => {
-  lerFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
+  const usuario = buscarSelecionado(usuarios, 'usuario');
+  const nomeAntigo = nomeCompleto(usuario);
+  lerFormularioDoUsuario(usuario);
+  trocarProprietario(nomeAntigo, nomeCompleto(usuario));
   salvarDados('usuarios', usuarios);
 };
 
 const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerente') || usuarios[0];
 
 const atualizarPerfil = () => {
-  lerDadosPessoais(buscarPerfil());
+  const perfil = buscarPerfil();
+  const nomeAntigo = nomeCompleto(perfil);
+  lerDadosPessoais(perfil);
+  trocarProprietario(nomeAntigo, nomeCompleto(perfil));
   salvarDados('usuarios', usuarios);
 };
 
