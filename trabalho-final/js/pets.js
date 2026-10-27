@@ -37,6 +37,7 @@ const preencherFormularioDoPet = (pet) => {
   preencherLista('tipo', pet.tipo);
   preencherTexto('raca', pet.raca);
   preencherLista('tamanho', pet.tamanho);
+  preencherLista('proprietario', pet.proprietario);
 
   const figura = document.querySelector('#foto-atual').parentElement;
   figura.innerHTML = `
@@ -74,14 +75,76 @@ const pesquisarPets = () => {
   mostrarNaTabela(encontrados, linhaDoPet, 'pet', 'Nenhum pet encontrado.');
 };
 
+const listarClientesNoCampo = () => {
+  const campo = document.querySelector('select[name="proprietario"]');
+  usuarios
+    .filter((usuario) => usuario.funcao === 'cliente')
+    .forEach(({ nome, sobrenome }) => {
+      const opcao = document.createElement('option');
+      opcao.value = `${nome} ${sobrenome}`;
+      opcao.textContent = `${nome} ${sobrenome}`;
+      campo.appendChild(opcao);
+    });
+};
+
+const lerFormularioDoPet = (pet) => {
+  pet.nome = valorDoCampo('nome');
+  pet.tipo = valorDoCampo('tipo');
+  pet.raca = valorDoCampo('raca');
+  pet.tamanho = valorDoCampo('tamanho');
+  pet.proprietario = valorDoCampo('proprietario');
+};
+
+const cadastrarPet = () => {
+  const pet = { id: novoId(pets), foto: 'imagens/avatar.svg' };
+  lerFormularioDoPet(pet);
+  pet.descricaoFoto = `${pet.nome}, sem foto cadastrada`;
+  pets.push(pet);
+  salvarDados('pets', pets);
+};
+
+const atualizarPet = () => {
+  const pet = buscarSelecionado(pets, 'pet');
+  const nomeAntigo = pet.nome;
+  lerFormularioDoPet(pet);
+
+  reservas.forEach((reserva) => {
+    if (reserva.pet === nomeAntigo) {
+      reserva.pet = pet.nome;
+    }
+  });
+
+  salvarDados('pets', pets);
+  salvarDados('reservas', reservas);
+};
+
+const deletarPet = (pet) => {
+  const reservasDoPet = reservas.filter((reserva) => reserva.pet === pet.nome);
+  if (reservasDoPet.length > 0) {
+    alert(`O pet ${pet.nome} tem reservas e não pode ser deletado.`);
+    return;
+  }
+  const restantes = pets.filter((item) => item.id !== pet.id);
+  salvarDados('pets', restantes);
+};
+
 if (document.querySelector('input[name="selecionados"]')) {
   ligarPesquisa(pesquisarPets);
 }
 
 if (document.querySelector('#ficha-nome')) {
-  mostrarPet(buscarSelecionado(pets, 'pet'));
+  const pet = buscarSelecionado(pets, 'pet');
+  mostrarPet(pet);
+  aoDeletar(() => deletarPet(pet));
 }
 
-if (document.querySelector('#foto-atual')) {
+if (estaNaTela('Novo Pet')) {
+  listarClientesNoCampo();
+  aoSalvar(cadastrarPet);
+}
+
+if (estaNaTela('Editar Pet')) {
+  listarClientesNoCampo();
   preencherFormularioDoPet(buscarSelecionado(pets, 'pet'));
+  aoSalvar(atualizarPet);
 }
