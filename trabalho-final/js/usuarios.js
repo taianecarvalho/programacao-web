@@ -53,6 +53,23 @@ const atualizarUsuario = () => {
   salvarDados('usuarios', usuarios);
 };
 
+const criarConta = () => {
+  const login = valorDoCampo('login');
+  const usuario = {
+    id: novoId(usuarios),
+    nome: login,
+    sobrenome: '',
+    email: login,
+    telefone: '',
+    funcao: 'cliente',
+    status: 'ativo',
+    foto: 'imagens/avatar.svg',
+    criado: ''
+  };
+  usuarios.push(usuario);
+  salvarDados('usuarios', usuarios);
+};
+
 const ligarRemocao = () => {
   document.querySelectorAll('tbody a[href="usuarios.html"]').forEach((link) => {
     link.addEventListener('click', () => {
@@ -121,4 +138,8 @@ if (estaNaTela('Novo Usuário')) {
 if (estaNaTela('Editar Usuário')) {
   preencherFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
   aoSalvar(atualizarUsuario);
+}
+
+if (document.querySelector('input[value="Criar conta"]')) {
+  document.querySelector('form').addEventListener('submit', criarConta);
 }

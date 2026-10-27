@@ -110,8 +110,10 @@ const usuarios = carregarDados('usuarios', usuariosIniciais);
 const configuracoes = carregarDados('configuracoes', configuracoesIniciais);
 
 const sair = document.querySelector('.topo a[href="index.html"]');
-sair.addEventListener('click', () => {
-  localStorage.removeItem('pet');
-  localStorage.removeItem('reserva');
-  localStorage.removeItem('usuario');
-});
+if (sair) {
+  sair.addEventListener('click', () => {
+    localStorage.removeItem('pet');
+    localStorage.removeItem('reserva');
+    localStorage.removeItem('usuario');
+  });
+}
