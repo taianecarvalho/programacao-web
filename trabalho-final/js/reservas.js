@@ -129,7 +129,18 @@ const lerFormularioDaReserva = (reserva) => {
   reserva.total = formatarValor(reserva.valor);
 };
 
+const periodoValido = () => {
+  if (contarDiarias(valorDoCampo('chegada'), valorDoCampo('partida')) === 0) {
+    alert('A data de partida precisa ser depois da data de chegada. A reserva não foi salva.');
+    return false;
+  }
+  return true;
+};
+
 const cadastrarReserva = () => {
+  if (!periodoValido()) {
+    return;
+  }
   const reserva = {
     id: novoId(reservas),
     status: 'Reservada',
@@ -147,6 +158,9 @@ const cadastrarReserva = () => {
 };
 
 const atualizarReserva = () => {
+  if (!periodoValido()) {
+    return;
+  }
   const reserva = buscarSelecionado(reservas, 'reserva');
   lerFormularioDaReserva(reserva);
   reserva.proprietario = valorDoCampo('proprietario');
