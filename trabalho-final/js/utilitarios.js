@@ -30,6 +30,48 @@ const mostrarNaTabela = (lista, montarLinha, chave, mensagemVazia) => {
   });
 };
 
+let campoDaOrdem = '';
+let ordemInvertida = false;
+
+const valorParaOrdenar = (valor) => {
+  if (typeof valor === 'string') {
+    return valor.toLowerCase();
+  }
+  return valor;
+};
+
+const ordenar = (lista) => {
+  if (campoDaOrdem === '') {
+    return lista;
+  }
+  const ordenada = [...lista].sort((a, b) => {
+    const valorA = valorParaOrdenar(a[campoDaOrdem]);
+    const valorB = valorParaOrdenar(b[campoDaOrdem]);
+    if (valorA < valorB) {
+      return -1;
+    }
+    if (valorA > valorB) {
+      return 1;
+    }
+    return 0;
+  });
+  if (ordemInvertida) {
+    ordenada.reverse();
+  }
+  return ordenada;
+};
+
+const ligarOrdenacao = (campos, pesquisar) => {
+  document.querySelectorAll('th a').forEach((link, posicao) => {
+    link.addEventListener('click', () => {
+      const campo = campos[posicao];
+      ordemInvertida = campo === campoDaOrdem && !ordemInvertida;
+      campoDaOrdem = campo;
+      pesquisar();
+    });
+  });
+};
+
 const contem = (texto, busca) => texto.toLowerCase().indexOf(busca.toLowerCase()) !== -1;
 
 const valorPesquisado = (nome) => document.querySelector(`form [name="${nome}"]`).value;

@@ -72,7 +72,7 @@ const pesquisarPets = () => {
     (tamanho === '' || pet.tamanho === tamanho)
   );
 
-  mostrarNaTabela(encontrados, linhaDoPet, 'pet', 'Nenhum pet encontrado.');
+  mostrarNaTabela(ordenar(encontrados), linhaDoPet, 'pet', 'Nenhum pet encontrado.');
 };
 
 const listarClientesNoCampo = () => {
@@ -129,6 +129,7 @@ const deletarPet = (pet) => {
 };
 
 if (document.querySelector('input[name="selecionados"]')) {
+  ligarOrdenacao(['id', 'nome', 'tipo', 'raca', 'tamanho'], pesquisarPets);
   ligarPesquisa(pesquisarPets);
 }
 

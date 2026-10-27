@@ -194,10 +194,11 @@ const pesquisarReservas = () => {
     contem(reserva.pet, pet)
   );
 
-  mostrarNaTabela(encontradas, linhaDaReserva, 'reserva', 'Nenhuma reserva encontrada.');
+  mostrarNaTabela(ordenar(encontradas), linhaDaReserva, 'reserva', 'Nenhuma reserva encontrada.');
 };
 
 if (document.querySelector('input[name="selecionadas"]')) {
+  ligarOrdenacao(['id', 'pet', 'chegada', 'partida', 'status', 'valor'], pesquisarReservas);
   ligarPesquisa(pesquisarReservas);
 }
 

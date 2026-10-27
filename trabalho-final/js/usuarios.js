@@ -155,9 +155,9 @@ const pesquisarUsuarios = () => {
     (criadoFim === '' || usuario.criado <= criadoFim)
   );
 
-  let lista = encontrados;
+  let lista = ordenar(encontrados);
   if (visualizarPor === 'Função') {
-    lista = agruparPorFuncao(encontrados);
+    lista = agruparPorFuncao(lista);
   }
 
   mostrarNaTabela(lista, linhaDoUsuario, 'usuario', 'Nenhum usuário encontrado.');
@@ -179,6 +179,7 @@ const ligarVisualizacao = () => {
 if (document.querySelector('input[name="selecionados"]')) {
   ligarVisualizacao();
   ligarAcoesDosMarcados();
+  ligarOrdenacao(['id', 'nome', 'email', 'telefone', 'funcao', 'status', 'criado'], pesquisarUsuarios);
   ligarPesquisa(pesquisarUsuarios);
 }
 
