@@ -131,9 +131,20 @@ const mudarStatusDosMarcados = (status) => {
   salvarDados('usuarios', usuarios);
 };
 
+const petsDoUsuario = (usuario) => pets.filter((pet) => pet.proprietario === nomeCompleto(usuario));
+
+const avisarQueTemPets = (comPets) => {
+  const nomes = comPets.map(nomeCompleto).join(', ');
+  alert(`Não é possível remover quem tem pets cadastrados: ${nomes}.`);
+};
+
 const removerMarcados = () => {
   const marcados = idsMarcados();
-  const restantes = usuarios.filter((usuario) => !estaMarcado(usuario, marcados));
+  const comPets = usuarios.filter((usuario) => estaMarcado(usuario, marcados) && petsDoUsuario(usuario).length > 0);
+  if (comPets.length > 0) {
+    avisarQueTemPets(comPets);
+  }
+  const restantes = usuarios.filter((usuario) => !estaMarcado(usuario, marcados) || petsDoUsuario(usuario).length > 0);
   salvarDados('usuarios', restantes);
 };
 
@@ -145,6 +156,10 @@ const ligarAcoesDosMarcados = () => {
 };
 
 const deletarUsuario = (usuario) => {
+  if (petsDoUsuario(usuario).length > 0) {
+    avisarQueTemPets([usuario]);
+    return;
+  }
   const restantes = usuarios.filter((item) => item.id !== usuario.id);
   salvarDados('usuarios', restantes);
 };
@@ -162,9 +177,8 @@ const linhaDoPetDoUsuario = ({ nome, tipo, raca }) => `
   <td><a href="ver-pet.html">Visualizar</a></td>
 `;
 
-const mostrarPetsDoUsuario = ({ nome, sobrenome }) => {
-  const petsDoUsuario = pets.filter((pet) => pet.proprietario === `${nome} ${sobrenome}`);
-  mostrarNaTabela(petsDoUsuario, linhaDoPetDoUsuario, 'pet', 'Nenhum pet cadastrado para este usuário.');
+const mostrarPetsDoUsuario = (usuario) => {
+  mostrarNaTabela(petsDoUsuario(usuario), linhaDoPetDoUsuario, 'pet', 'Nenhum pet cadastrado para este usuário.');
 };
 
 const mostrarUsuario = (usuario) => {
