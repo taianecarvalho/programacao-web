@@ -151,6 +151,10 @@ const reservas = carregarDados('reservas', reservasIniciais);
 const usuarios = carregarDados('usuarios', usuariosIniciais);
 const configuracoes = carregarDados('configuracoes', configuracoesIniciais);
 
+document.querySelectorAll('input[type="date"]').forEach((campo) => {
+  campo.addEventListener('click', () => campo.showPicker());
+});
+
 const botaoLimpar = document.querySelector('form.formulario input[value="Limpar"]');
 if (botaoLimpar) {
   botaoLimpar.addEventListener('click', () => {
