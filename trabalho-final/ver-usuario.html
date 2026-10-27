@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ficha completa de um usuário cadastrado no Hotel Pet.">
+  <title>Ver usuário - Hotel Pet</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+  <div class="menu">
+    <a href="pets.html"><img src="imagens/logo.svg" alt="Hotel Pet"></a>
+
+    <ul>
+      <li><a href="pets.html"><img src="imagens/icone-pet.svg" alt=""> Pets</a></li>
+      <li><a href="reservas.html"><img src="imagens/icone-reservas.svg" alt=""> Reservas</a></li>
+      <li><a href="usuarios.html" class="ativo"><img src="imagens/icone-usuarios.svg" alt=""> Usuários</a></li>
+      <li><a href="configuracoes.html"><img src="imagens/icone-configuracoes.svg" alt=""> Configurações</a></li>
+    </ul>
+  </div><div class="conteudo">
+
+    <div class="topo">
+      <a href="editar-perfil.html"><img src="imagens/avatar.svg" alt=""> Taiane Carvalho</a>
+      <a href="index.html">Sair</a>
+    </div>
+
+    <div class="trilha">
+      <ol>
+        <li><a href="pets.html">Home</a></li>
+        <li>/</li>
+        <li><a href="usuarios.html">Usuários</a></li>
+        <li>/</li>
+        <li>Ver usuário</li>
+      </ol>
+    </div>
+
+    <div class="painel">
+
+      <h1>Ver usuário</h1>
+
+      <p class="acoes-topo">
+        <a href="editar-usuario.html" class="botao">Editar</a>
+        <a href="usuarios.html" class="botao">Deletar</a>
+      </p>
+
+      <div class="formulario">
+
+        <dl class="campos ficha">
+
+          <div class="campo">
+            <dt>Id:</dt>
+            <dd id="ficha-id">9087653</dd>
+          </div>
+
+          <div class="campo">
+            <dt>Email:</dt>
+            <dd id="ficha-email">josedasilva@pet.com</dd>
+          </div>
+
+          <div class="campo">
+            <dt>Nome:</dt>
+            <dd id="ficha-nome">José</dd>
+          </div>
+
+          <div class="campo">
+            <dt>Sobrenome:</dt>
+            <dd id="ficha-sobrenome">da Silva</dd>
+          </div>
+
+          <div class="campo">
+            <dt>Telefone:</dt>
+            <dd id="ficha-telefone">+55 (73) 99765-3321</dd>
+          </div>
+
+          <div class="campo">
+            <dt>Função:</dt>
+            <dd id="ficha-funcao">Cliente</dd>
+          </div>
+
+          <div class="campo">
+            <dt>Status:</dt>
+            <dd id="ficha-status" class="sem-caixa"><div class="etiqueta ativo">Ativo</div></dd>
+          </div>
+
+          <div class="campo">
+            <dt>Criado em:</dt>
+            <dd id="ficha-criado">10/03/2026</dd>
+          </div>
+
+        </dl><div class="imagem">
+
+          <figure class="foto">
+            <img id="ficha-foto" src="imagens/avatar.svg" alt="Foto de José da Silva">
+          </figure>
+
+        </div>
+
+      </div>
+
+      <h2>Pets</h2>
+
+      <div class="rolagem">
+        <table>
+
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Raça</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="pets-do-usuario">
+            <tr>
+              <td>Anya</td>
+              <td>Cachorro</td>
+              <td>Golden Retriever</td>
+              <td><a href="ver-pet.html">Visualizar</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p id="aviso"></p>
+      </div>
+
+      <p><a href="usuarios.html" class="botao">Voltar</a></p>
+
+    </div>
+
+  </div>
+
+  <script src="js/dados.js"></script>
+  <script src="js/utilitarios.js"></script>
+  <script src="js/usuarios.js"></script>
+</body>
+</html>

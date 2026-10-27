@@ -32,6 +32,7 @@ const linhaDoUsuario = ({ id, nome, sobrenome, email, telefone, funcao, status, 
   <td>${dataDeCriacao(criado)}</td>
   <td>
     <a href="editar-usuario.html">Editar</a>
+    <a href="ver-usuario.html">Visualizar</a>
     <a href="usuarios.html">Remover</a>
   </td>
 `;
@@ -120,14 +121,47 @@ const ligarAcoesDosMarcados = () => {
   botaoRemover.addEventListener('click', removerMarcados);
 };
 
+const deletarUsuario = (usuario) => {
+  const restantes = usuarios.filter((item) => item.id !== usuario.id);
+  salvarDados('usuarios', restantes);
+};
+
 const ligarRemocao = () => {
   document.querySelectorAll('tbody a[href="usuarios.html"]').forEach((link) => {
-    link.addEventListener('click', () => {
-      const usuario = buscarSelecionado(usuarios, 'usuario');
-      const restantes = usuarios.filter((item) => item.id !== usuario.id);
-      salvarDados('usuarios', restantes);
-    });
+    link.addEventListener('click', () => deletarUsuario(buscarSelecionado(usuarios, 'usuario')));
   });
+};
+
+const linhaDoPetDoUsuario = ({ nome, tipo, raca }) => `
+  <td>${nome}</td>
+  <td>${nomesDeTipo[tipo]}</td>
+  <td>${raca}</td>
+  <td><a href="ver-pet.html">Visualizar</a></td>
+`;
+
+const mostrarPetsDoUsuario = ({ nome, sobrenome }) => {
+  const petsDoUsuario = pets.filter((pet) => pet.proprietario === `${nome} ${sobrenome}`);
+  mostrarNaTabela(petsDoUsuario, linhaDoPetDoUsuario, 'pet', 'Nenhum pet cadastrado para este usuário.');
+};
+
+const mostrarUsuario = (usuario) => {
+  const { id, email, nome, sobrenome, telefone, funcao, status, foto = 'imagens/avatar.svg', criado = '' } = usuario;
+
+  mostrarNaFicha('id', id);
+  mostrarNaFicha('email', email);
+  mostrarNaFicha('nome', nome);
+  mostrarNaFicha('sobrenome', sobrenome);
+  mostrarNaFicha('telefone', telefone);
+  mostrarNaFicha('funcao', nomesDeFuncao[funcao]);
+  mostrarNaFicha('criado', dataDeCriacao(criado));
+
+  document.querySelector('#ficha-status').innerHTML =
+    `<div class="etiqueta ${status}">${nomesDeSituacao[status]}</div>`;
+
+  const figura = document.querySelector('#ficha-foto').parentElement;
+  figura.innerHTML = `<img id="ficha-foto" src="${foto}" alt="Foto de ${nome} ${sobrenome}">`;
+
+  mostrarPetsDoUsuario(usuario);
 };
 
 const agruparPorFuncao = (lista) => [
@@ -190,6 +224,12 @@ if (estaNaTela('Novo Usuário')) {
 if (estaNaTela('Editar Usuário')) {
   preencherFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
   aoSalvar(atualizarUsuario);
+}
+
+if (estaNaTela('Ver usuário')) {
+  const usuario = buscarSelecionado(usuarios, 'usuario');
+  mostrarUsuario(usuario);
+  aoDeletar(() => deletarUsuario(usuario));
 }
 
 if (estaNaTela('Editar Perfil')) {

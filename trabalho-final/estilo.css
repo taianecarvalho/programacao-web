@@ -509,12 +509,38 @@ td a:hover {
 }
 
 .visualizar {
+  margin: 0 0 8px;
   font-size: 13px;
   color: #5a5a5a;
 }
 
-.visualizar input {
+.visualizar .botao {
+  padding: 6px 14px;
+  border-color: #cdd4d1;
+  border-radius: 0;
+  color: #5a5a5a;
+}
+
+.visualizar .botao:first-of-type {
   margin-left: 8px;
+  border-radius: 4px 0 0 4px;
+}
+
+.visualizar .botao:last-of-type {
+  margin-left: -1px;
+  border-radius: 0 4px 4px 0;
+}
+
+.visualizar .botao.principal {
+  position: relative;
+  background-color: #e6f3ee;
+  border-color: #00875a;
+  color: #00875a;
+  font-weight: bold;
+}
+
+.visualizar .botao.principal:hover {
+  background-color: #e6f3ee;
 }
 
 .etiqueta.ativo,
