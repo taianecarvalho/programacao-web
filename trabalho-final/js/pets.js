@@ -111,6 +111,7 @@ const atualizarPet = () => {
   reservas.forEach((reserva) => {
     if (reserva.pet === nomeAntigo) {
       reserva.pet = pet.nome;
+      reserva.proprietario = pet.proprietario;
     }
   });
 
