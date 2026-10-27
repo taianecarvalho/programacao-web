@@ -1,6 +1,14 @@
 const salvarConfiguracoes = () => {
-  configuracoes.diaria = parseFloat(valorDoCampo('diaria').replace(',', '.'));
-  configuracoes.vagas = parseInt(valorDoCampo('vagas'));
+  const diaria = parseFloat(valorDoCampo('diaria').replace(',', '.'));
+  const vagas = parseInt(valorDoCampo('vagas'));
+
+  if (isNaN(diaria) || isNaN(vagas) || diaria <= 0 || vagas <= 0) {
+    alert('Informe um valor de diária e um número de vagas maiores que zero.');
+    return;
+  }
+
+  configuracoes.diaria = diaria;
+  configuracoes.vagas = vagas;
   salvarDados('configuracoes', configuracoes);
 };
 
