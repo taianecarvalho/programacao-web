@@ -44,7 +44,9 @@
         <div class="campos">
 
           <label>Pet *
-            <input type="text" name="pet" required>
+            <select name="pet" required>
+              <option value="">Selecione</option>
+            </select>
           </label>
 
           <label class="largo">Período *
@@ -60,7 +62,7 @@
 
         </div>
 
-        <p class="total">Total das diárias: <strong>R$ 40,00</strong></p>
+        <p class="total">Total das diárias: <strong id="total">R$ 0,00</strong></p>
 
         <div class="acoes">
           <input type="submit" value="Salvar">
