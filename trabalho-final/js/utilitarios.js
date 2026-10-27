@@ -151,6 +151,15 @@ const reservas = carregarDados('reservas', reservasIniciais);
 const usuarios = carregarDados('usuarios', usuariosIniciais);
 const configuracoes = carregarDados('configuracoes', configuracoesIniciais);
 
+const botaoLimpar = document.querySelector('form.formulario input[value="Limpar"]');
+if (botaoLimpar) {
+  botaoLimpar.addEventListener('click', () => {
+    document.querySelectorAll('form.formulario [name]').forEach((campo) => {
+      campo.value = '';
+    });
+  });
+}
+
 const sair = document.querySelector('.topo a[href="index.html"]');
 if (sair) {
   sair.addEventListener('click', () => {

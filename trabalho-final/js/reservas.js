@@ -73,6 +73,7 @@ const mostrarEstadoDaReserva = () => {
 
 const ligarEstado = () => {
   document.querySelector('select[name="status"]').addEventListener('change', mostrarEstadoDaReserva);
+  botaoLimpar.addEventListener('click', mostrarEstadoDaReserva);
   mostrarEstadoDaReserva();
 };
 
@@ -103,6 +104,7 @@ const ligarTotal = () => {
   document.querySelectorAll('input[type="date"]').forEach((campo) => {
     campo.addEventListener('change', mostrarTotal);
   });
+  botaoLimpar.addEventListener('click', mostrarTotal);
   mostrarTotal();
 };
 
