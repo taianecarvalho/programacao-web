@@ -1,8 +1,12 @@
-const preencherFormularioDoUsuario = (usuario) => {
+const preencherDadosPessoais = (usuario) => {
   preencherTexto('email', usuario.email);
   preencherTexto('nome', usuario.nome);
   preencherTexto('sobrenome', usuario.sobrenome);
   preencherTexto('telefone', usuario.telefone);
+};
+
+const preencherFormularioDoUsuario = (usuario) => {
+  preencherDadosPessoais(usuario);
   preencherLista('funcao', usuario.funcao);
   preencherLista('status', usuario.status);
 };
@@ -32,11 +36,15 @@ const linhaDoUsuario = ({ id, nome, sobrenome, email, telefone, funcao, status, 
   </td>
 `;
 
-const lerFormularioDoUsuario = (usuario) => {
+const lerDadosPessoais = (usuario) => {
   usuario.email = valorDoCampo('email');
   usuario.nome = valorDoCampo('nome');
   usuario.sobrenome = valorDoCampo('sobrenome');
   usuario.telefone = valorDoCampo('telefone');
+};
+
+const lerFormularioDoUsuario = (usuario) => {
+  lerDadosPessoais(usuario);
   usuario.funcao = valorDoCampo('funcao');
   usuario.status = valorDoCampo('status');
 };
@@ -50,6 +58,13 @@ const cadastrarUsuario = () => {
 
 const atualizarUsuario = () => {
   lerFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
+  salvarDados('usuarios', usuarios);
+};
+
+const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerente') || usuarios[0];
+
+const atualizarPerfil = () => {
+  lerDadosPessoais(buscarPerfil());
   salvarDados('usuarios', usuarios);
 };
 
@@ -138,6 +153,11 @@ if (estaNaTela('Novo Usuário')) {
 if (estaNaTela('Editar Usuário')) {
   preencherFormularioDoUsuario(buscarSelecionado(usuarios, 'usuario'));
   aoSalvar(atualizarUsuario);
+}
+
+if (estaNaTela('Editar Perfil')) {
+  preencherDadosPessoais(buscarPerfil());
+  aoSalvar(atualizarPerfil);
 }
 
 if (document.querySelector('input[value="Criar conta"]')) {
