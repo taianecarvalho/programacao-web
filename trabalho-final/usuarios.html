@@ -39,6 +39,11 @@
 
       <p><a href="novo-usuario.html" class="botao principal">+ Novo usuário</a></p>
 
+      <p class="visualizar">Visualizar por:
+        <input type="button" value="Usuários" class="botao principal">
+        <input type="button" value="Função" class="botao">
+      </p>
+
       <form action="usuarios.html" method="get">
         <fieldset>
           <legend>Pesquisar usuários</legend>
@@ -72,6 +77,13 @@
             </select>
           </label>
 
+          <label>Criado em
+            <span class="periodo">
+              <input type="date" name="criado_inicio">
+              <input type="date" name="criado_fim">
+            </span>
+          </label>
+
           <div class="acoes">
             <input type="button" value="Pesquisar" class="botao principal">
             <input type="button" value="Limpar" class="botao">
@@ -87,12 +99,14 @@
             <thead>
               <tr>
                 <th>Sel.</th>
+                <th>Foto</th>
                 <th><a href="usuarios.html?ordem=id">Id</a></th>
                 <th><a href="usuarios.html?ordem=nome">Nome</a></th>
                 <th><a href="usuarios.html?ordem=email">Email</a></th>
                 <th><a href="usuarios.html?ordem=telefone">Telefone</a></th>
                 <th><a href="usuarios.html?ordem=funcao">Função</a></th>
                 <th><a href="usuarios.html?ordem=status">Status</a></th>
+                <th><a href="usuarios.html?ordem=criado">Criado em</a></th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -100,12 +114,14 @@
             <tbody>
               <tr>
                 <td><input type="checkbox" name="selecionados" value="9087651" title="Selecionar usuário"></td>
+                <td><img src="imagens/avatar.svg" alt="" class="foto-usuario"></td>
                 <td>9087651</td>
                 <td>Taiane Carvalho</td>
                 <td>taiane@hotelpet.com</td>
                 <td>+55 (73) 99876-8943</td>
                 <td>Gerente</td>
                 <td><div class="etiqueta ativo">Ativo</div></td>
+                <td>19/02/2026</td>
                 <td>
                   <a href="editar-usuario.html">Editar</a>
                 </td>
@@ -113,12 +129,14 @@
 
               <tr>
                 <td><input type="checkbox" name="selecionados" value="9087652" title="Selecionar usuário"></td>
+                <td><img src="imagens/avatar.svg" alt="" class="foto-usuario"></td>
                 <td>9087652</td>
                 <td>Marcos Pereira</td>
                 <td>marcos@hotelpet.com</td>
                 <td>+55 (73) 99812-4477</td>
                 <td>Funcionário</td>
                 <td><div class="etiqueta ativo">Ativo</div></td>
+                <td>02/03/2026</td>
                 <td>
                   <a href="editar-usuario.html">Editar</a>
                 </td>
@@ -126,12 +144,14 @@
 
               <tr>
                 <td><input type="checkbox" name="selecionados" value="9087653" title="Selecionar usuário"></td>
+                <td><img src="imagens/avatar.svg" alt="" class="foto-usuario"></td>
                 <td>9087653</td>
                 <td>José da Silva</td>
                 <td>josedasilva@pet.com</td>
                 <td>+55 (73) 99765-3321</td>
                 <td>Cliente</td>
                 <td><div class="etiqueta ativo">Ativo</div></td>
+                <td>10/03/2026</td>
                 <td>
                   <a href="editar-usuario.html">Editar</a>
                 </td>
@@ -139,12 +159,14 @@
 
               <tr>
                 <td><input type="checkbox" name="selecionados" value="9087654" title="Selecionar usuário"></td>
+                <td><img src="imagens/avatar.svg" alt="" class="foto-usuario"></td>
                 <td>9087654</td>
                 <td>Ana Beatriz Rocha</td>
                 <td>anabeatriz@pet.com</td>
                 <td>+55 (73) 99654-1180</td>
                 <td>Cliente</td>
                 <td><div class="etiqueta inativo">Inativo</div></td>
+                <td>15/04/2026</td>
                 <td>
                   <a href="editar-usuario.html">Editar</a>
                 </td>

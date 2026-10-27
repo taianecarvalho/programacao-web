@@ -84,7 +84,9 @@ const usuariosIniciais = [
     email: 'taiane@hotelpet.com',
     telefone: '+55 (73) 99876-8943',
     funcao: 'gerente',
-    status: 'ativo'
+    status: 'ativo',
+    foto: 'imagens/avatar.svg',
+    criado: '2026-02-19'
   },
   {
     id: '9087652',
@@ -93,7 +95,9 @@ const usuariosIniciais = [
     email: 'marcos@hotelpet.com',
     telefone: '+55 (73) 99812-4477',
     funcao: 'funcionario',
-    status: 'ativo'
+    status: 'ativo',
+    foto: 'imagens/avatar.svg',
+    criado: '2026-03-02'
   },
   {
     id: '9087653',
@@ -102,7 +106,9 @@ const usuariosIniciais = [
     email: 'josedasilva@pet.com',
     telefone: '+55 (73) 99765-3321',
     funcao: 'cliente',
-    status: 'ativo'
+    status: 'ativo',
+    foto: 'imagens/avatar.svg',
+    criado: '2026-03-10'
   },
   {
     id: '9087654',
@@ -111,7 +117,9 @@ const usuariosIniciais = [
     email: 'anabeatriz@pet.com',
     telefone: '+55 (73) 99654-1180',
     funcao: 'cliente',
-    status: 'inativo'
+    status: 'inativo',
+    foto: 'imagens/avatar.svg',
+    criado: '2026-04-15'
   }
 ];
 

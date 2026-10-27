@@ -503,6 +503,20 @@ td a:hover {
   display: none;
 }
 
+.foto-usuario {
+  width: 32px;
+  border-radius: 16px;
+}
+
+.visualizar {
+  font-size: 13px;
+  color: #5a5a5a;
+}
+
+.visualizar input {
+  margin-left: 8px;
+}
+
 .etiqueta.ativo,
 .etiqueta.inativo {
   min-width: 80px;
