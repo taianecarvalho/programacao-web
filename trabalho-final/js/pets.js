@@ -3,7 +3,7 @@ const mostrarReservasDoPet = (pet) => {
   corpo.innerHTML = '';
 
   reservas
-    .filter((reserva) => reserva.pet === pet.nome)
+    .filter((reserva) => reserva.petId === pet.id)
     .forEach((reserva) => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
@@ -105,12 +105,10 @@ const cadastrarPet = () => {
 
 const atualizarPet = () => {
   const pet = buscarSelecionado(pets, 'pet');
-  const nomeAntigo = pet.nome;
   lerFormularioDoPet(pet);
 
   reservas.forEach((reserva) => {
-    if (reserva.pet === nomeAntigo) {
-      reserva.pet = pet.nome;
+    if (reserva.petId === pet.id) {
       reserva.proprietario = pet.proprietario;
     }
   });
@@ -120,7 +118,7 @@ const atualizarPet = () => {
 };
 
 const deletarPet = (pet) => {
-  const reservasDoPet = reservas.filter((reserva) => reserva.pet === pet.nome);
+  const reservasDoPet = reservas.filter((reserva) => reserva.petId === pet.id);
   if (reservasDoPet.length > 0) {
     alert(`O pet ${pet.nome} tem reservas e não pode ser deletado.`);
     return;

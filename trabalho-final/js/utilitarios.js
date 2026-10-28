@@ -10,7 +10,7 @@ const dataDeHoje = () => {
   return `${hoje.getFullYear()}-${mes}-${dia}`;
 };
 
-const guardarAoClicar =(links, chave, id) => {
+const guardarAoClicar = (links, chave, id) => {
   links.forEach((link) => {
     link.addEventListener('click', () => {
       localStorage.setItem(chave, id);
@@ -161,6 +161,14 @@ const pets = carregarDados('pets', petsIniciais);
 const reservas = carregarDados('reservas', reservasIniciais);
 const usuarios = carregarDados('usuarios', usuariosIniciais);
 const configuracoes = carregarDados('configuracoes', configuracoesIniciais);
+
+reservas.forEach((reserva) => {
+  if (reserva.petId === undefined) {
+    const pet = pets.find((item) => item.nome === reserva.pet) || { id: '' };
+    reserva.petId = pet.id;
+    delete reserva.pet;
+  }
+});
 
 document.querySelectorAll('input[type="date"]').forEach((campo) => {
   campo.addEventListener('click', () => campo.showPicker());

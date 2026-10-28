@@ -27,24 +27,24 @@ const mostrarDataNaFicha = (campo, data) => {
   }
 };
 
-const idDoPet = (nome) => {
-  const pet = pets.find((item) => item.nome === nome);
+const nomeDoPet = (petId) => {
+  const pet = pets.find((item) => item.id === petId);
   if (pet) {
-    return pet.id;
+    return pet.nome;
   }
   return '';
 };
 
-const mostrarPetNaFicha = (nome) => {
+const mostrarPetNaFicha = (petId) => {
   const campo = document.querySelector('#ficha-pet');
-  campo.innerHTML = `<a href="ver-pet.html">${nome}</a>`;
-  guardarAoClicar(campo.querySelectorAll('a'), 'pet', idDoPet(nome));
+  campo.innerHTML = `<a href="ver-pet.html">${nomeDoPet(petId)}</a>`;
+  guardarAoClicar(campo.querySelectorAll('a'), 'pet', petId);
 };
 
 const mostrarReserva = (reserva) => {
   mostrarNaFicha('id', reserva.id);
   mostrarNaFicha('proprietario', reserva.proprietario);
-  mostrarPetNaFicha(reserva.pet);
+  mostrarPetNaFicha(reserva.petId);
   mostrarNaFicha('chegada', formatarData(reserva.chegada));
   mostrarNaFicha('partida', formatarData(reserva.partida));
   mostrarNaFicha('notas', reserva.notas);
@@ -93,9 +93,9 @@ const ligarEstado = () => {
 
 const listarPetsNoCampo = () => {
   const campo = document.querySelector('select[name="pet"]');
-  pets.forEach(({ nome }) => {
+  pets.forEach(({ id, nome }) => {
     const opcao = document.createElement('option');
-    opcao.value = nome;
+    opcao.value = id;
     opcao.textContent = nome;
     campo.appendChild(opcao);
   });
@@ -124,7 +124,7 @@ const ligarTotal = () => {
 
 const preencherFormularioDaReserva = (reserva) => {
   preencherTexto('proprietario', reserva.proprietario);
-  preencherLista('pet', reserva.pet);
+  preencherLista('pet', reserva.petId);
   preencherTexto('chegada', reserva.chegada);
   preencherTexto('partida', reserva.partida);
   preencherAreaDeTexto('notas', reserva.notas);
@@ -135,7 +135,7 @@ const preencherFormularioDaReserva = (reserva) => {
 };
 
 const lerFormularioDaReserva = (reserva) => {
-  reserva.pet = valorDoCampo('pet');
+  reserva.petId = valorDoCampo('pet');
   reserva.chegada = valorDoCampo('chegada');
   reserva.partida = valorDoCampo('partida');
   reserva.notas = valorDoCampo('notas');
@@ -165,7 +165,7 @@ const cadastrarReserva = () => {
     imagens: []
   };
   lerFormularioDaReserva(reserva);
-  const pet = pets.find((item) => item.nome === reserva.pet);
+  const pet = pets.find((item) => item.id === reserva.petId);
   reserva.proprietario = pet.proprietario;
   reservas.push(reserva);
   salvarDados('reservas', reservas);
@@ -196,10 +196,10 @@ const linkDeEditar = (status) => {
   return '<a href="editar-reserva.html">Editar</a>';
 };
 
-const linhaDaReserva = ({ id, pet, chegada, partida, status, total }) => `
+const linhaDaReserva = ({ id, petId, pet, chegada, partida, status, total }) => `
   <td><input type="checkbox" name="selecionadas" value="${id}" title="Selecionar reserva"></td>
   <td>${id}</td>
-  <td><a href="ver-pet.html" class="nome-pet" data-pet="${idDoPet(pet)}">${pet}</a></td>
+  <td><a href="ver-pet.html" class="nome-pet" data-pet="${petId}">${pet}</a></td>
   <td>${formatarData(chegada)}</td>
   <td>${formatarData(partida)}</td>
   <td><div class="etiqueta ${classesDeStatus[status]}">${status}</div></td>
@@ -226,7 +226,9 @@ const pesquisarReservas = () => {
   const status = valorPesquisado('status');
   const pet = valorPesquisado('pet');
 
-  const encontradas = reservas.filter((reserva) =>
+  const comNomeDoPet = reservas.map((reserva) => ({ ...reserva, pet: nomeDoPet(reserva.petId) }));
+
+  const encontradas = comNomeDoPet.filter((reserva) =>
     contem(reserva.id, id) &&
     (chegada === '' || reserva.chegada >= chegada) &&
     (partida === '' || reserva.partida <= partida) &&

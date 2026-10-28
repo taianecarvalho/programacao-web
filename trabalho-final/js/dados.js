@@ -24,7 +24,7 @@ const petsIniciais = [
 const reservasIniciais = [
   {
     id: '1234099871',
-    pet: 'Anya',
+    petId: '12349984501',
     proprietario: 'José da Silva',
     chegada: '2026-05-02',
     partida: '2026-05-07',
@@ -40,7 +40,7 @@ const reservasIniciais = [
   },
   {
     id: '1234099872',
-    pet: 'Maya',
+    petId: '12349984502',
     proprietario: 'José da Silva',
     chegada: '2026-05-02',
     partida: '2026-05-07',
@@ -56,7 +56,7 @@ const reservasIniciais = [
   },
   {
     id: '1234099873',
-    pet: 'Anya',
+    petId: '12349984501',
     proprietario: 'José da Silva',
     chegada: '2026-05-02',
     partida: '2026-05-07',
