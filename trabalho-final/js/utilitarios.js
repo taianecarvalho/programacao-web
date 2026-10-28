@@ -168,6 +168,9 @@ reservas.forEach((reserva) => {
     reserva.petId = pet.id;
     delete reserva.pet;
   }
+  if (reserva.diaria === undefined) {
+    reserva.diaria = configuracoes.diaria;
+  }
 });
 
 document.querySelectorAll('input[type="date"]').forEach((campo) => {

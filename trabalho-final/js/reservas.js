@@ -108,7 +108,9 @@ const contarDiarias = (chegada, partida) => {
   return (new Date(partida) - new Date(chegada)) / 86400000;
 };
 
-const calcularValor = () => contarDiarias(valorDoCampo('chegada'), valorDoCampo('partida')) * configuracoes.diaria;
+let diariaDoFormulario = configuracoes.diaria;
+
+const calcularValor = () => contarDiarias(valorDoCampo('chegada'), valorDoCampo('partida')) * diariaDoFormulario;
 
 const mostrarTotal = () => {
   document.querySelector('#total').textContent = formatarValor(calcularValor());
@@ -158,6 +160,7 @@ const cadastrarReserva = () => {
   const reserva = {
     id: novoId(reservas),
     status: 'Reservada',
+    diaria: configuracoes.diaria,
     anotacoes: '',
     recibo: '',
     criado: dataDeHoje(),
@@ -261,8 +264,10 @@ if (estaNaTela('Fazer reserva')) {
 }
 
 if (estaNaTela('Editar reserva')) {
+  const reserva = buscarSelecionado(reservas, 'reserva');
+  diariaDoFormulario = reserva.diaria;
   listarPetsNoCampo();
-  preencherFormularioDaReserva(buscarSelecionado(reservas, 'reserva'));
+  preencherFormularioDaReserva(reserva);
   ligarEstado();
   ligarTotal();
   aoSalvar(atualizarReserva);
