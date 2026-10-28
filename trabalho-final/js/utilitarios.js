@@ -138,7 +138,11 @@ const valorDoCampo = (nome) => document.querySelector(`[name="${nome}"]`).value;
 const estaNaTela = (titulo) => document.querySelector('h1').textContent === titulo;
 
 const aoSalvar = (salvar) => {
-  document.querySelector('form.formulario').addEventListener('submit', salvar);
+  document.querySelector('form.formulario').addEventListener('submit', (evento) => {
+    if (salvar() === false) {
+      evento.preventDefault();
+    }
+  });
 };
 
 const aoDeletar = (deletar) => {

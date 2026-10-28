@@ -139,7 +139,7 @@ const periodoValido = () => {
 
 const cadastrarReserva = () => {
   if (!periodoValido()) {
-    return;
+    return false;
   }
   const reserva = {
     id: novoId(reservas),
@@ -159,7 +159,7 @@ const cadastrarReserva = () => {
 
 const atualizarReserva = () => {
   if (!periodoValido()) {
-    return;
+    return false;
   }
   const reserva = buscarSelecionado(reservas, 'reserva');
   lerFormularioDaReserva(reserva);

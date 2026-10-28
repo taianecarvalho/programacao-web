@@ -4,7 +4,7 @@ const salvarConfiguracoes = () => {
 
   if (isNaN(diaria) || isNaN(vagas) || diaria <= 0 || vagas <= 0) {
     alert('Informe um valor de diária e um número de vagas maiores que zero.');
-    return;
+    return false;
   }
 
   configuracoes.diaria = diaria;
