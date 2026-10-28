@@ -51,7 +51,7 @@ const lerFormularioDoUsuario = (usuario) => {
 };
 
 const cadastrarUsuario = () => {
-  const usuario = { id: novoId(usuarios), foto: 'imagens/avatar.svg', criado: '' };
+  const usuario = { id: novoId(usuarios), foto: 'imagens/avatar.svg', criado: dataDeHoje() };
   lerFormularioDoUsuario(usuario);
   usuarios.push(usuario);
   salvarDados('usuarios', usuarios);
@@ -103,7 +103,7 @@ const criarConta = () => {
     funcao: 'cliente',
     status: 'ativo',
     foto: 'imagens/avatar.svg',
-    criado: ''
+    criado: dataDeHoje()
   };
   usuarios.push(usuario);
   salvarDados('usuarios', usuarios);

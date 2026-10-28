@@ -3,7 +3,14 @@ const formatarData = (data) => {
   return `${d1}${d2}/${m1}${m2}/${a1}${a2}${a3}${a4}`;
 };
 
-const guardarAoClicar = (links, chave, id) => {
+const dataDeHoje = () => {
+  const hoje = new Date();
+  const mes = `${hoje.getMonth() + 1}`.padStart(2, '0');
+  const dia = `${hoje.getDate()}`.padStart(2, '0');
+  return `${hoje.getFullYear()}-${mes}-${dia}`;
+};
+
+const guardarAoClicar =(links, chave, id) => {
   links.forEach((link) => {
     link.addEventListener('click', () => {
       localStorage.setItem(chave, id);

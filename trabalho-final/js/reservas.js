@@ -146,8 +146,8 @@ const cadastrarReserva = () => {
     status: 'Reservada',
     anotacoes: '',
     recibo: '',
-    criado: '',
-    atualizado: '',
+    criado: dataDeHoje(),
+    atualizado: dataDeHoje(),
     imagens: []
   };
   lerFormularioDaReserva(reserva);
@@ -166,6 +166,7 @@ const atualizarReserva = () => {
   reserva.proprietario = valorDoCampo('proprietario');
   reserva.status = valorDoCampo('status');
   reserva.anotacoes = valorDoCampo('anotacoes');
+  reserva.atualizado = dataDeHoje();
   salvarDados('reservas', reservas);
 };
 
