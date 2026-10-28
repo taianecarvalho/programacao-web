@@ -80,7 +80,7 @@ const ligarPesquisa = (pesquisar) => {
   const [botaoPesquisar, botaoLimpar] = document.querySelectorAll('form .acoes input');
   botaoPesquisar.addEventListener('click', pesquisar);
   botaoLimpar.addEventListener('click', () => {
-    document.querySelectorAll('form [name]').forEach((campo) => {
+    botaoPesquisar.form.querySelectorAll('[name]').forEach((campo) => {
       campo.value = '';
     });
     pesquisar();
