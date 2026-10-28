@@ -380,6 +380,15 @@ td a:hover {
   color: #006644;
 }
 
+td a.nome-pet {
+  margin-right: 0;
+  padding: 0;
+  border-width: 0;
+  background-color: transparent;
+  font-size: inherit;
+  text-decoration: underline;
+}
+
 .valor {
   text-align: right;
 }

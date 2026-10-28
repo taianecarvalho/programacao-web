@@ -27,10 +27,24 @@ const mostrarDataNaFicha = (campo, data) => {
   }
 };
 
+const idDoPet = (nome) => {
+  const pet = pets.find((item) => item.nome === nome);
+  if (pet) {
+    return pet.id;
+  }
+  return '';
+};
+
+const mostrarPetNaFicha = (nome) => {
+  const campo = document.querySelector('#ficha-pet');
+  campo.innerHTML = `<a href="ver-pet.html">${nome}</a>`;
+  guardarAoClicar(campo.querySelectorAll('a'), 'pet', idDoPet(nome));
+};
+
 const mostrarReserva = (reserva) => {
   mostrarNaFicha('id', reserva.id);
   mostrarNaFicha('proprietario', reserva.proprietario);
-  mostrarNaFicha('pet', reserva.pet);
+  mostrarPetNaFicha(reserva.pet);
   mostrarNaFicha('chegada', formatarData(reserva.chegada));
   mostrarNaFicha('partida', formatarData(reserva.partida));
   mostrarNaFicha('notas', reserva.notas);
@@ -178,7 +192,7 @@ const deletarReserva = (reserva) => {
 const linhaDaReserva = ({ id, pet, chegada, partida, status, total }) => `
   <td><input type="checkbox" name="selecionadas" value="${id}" title="Selecionar reserva"></td>
   <td>${id}</td>
-  <td>${pet}</td>
+  <td><a href="ver-pet.html" class="nome-pet" data-pet="${idDoPet(pet)}">${pet}</a></td>
   <td>${formatarData(chegada)}</td>
   <td>${formatarData(partida)}</td>
   <td><div class="etiqueta ${classesDeStatus[status]}">${status}</div></td>
@@ -189,6 +203,11 @@ const linhaDaReserva = ({ id, pet, chegada, partida, status, total }) => `
   </td>
 `;
 
+const ligarLinksDosPets = () => {
+  document.querySelectorAll('tbody a.nome-pet').forEach((link) => {
+    guardarAoClicar([link], 'pet', link.dataset.pet);
+  });
+};
 
 const pesquisarReservas = () => {
   const id = valorPesquisado('id');
@@ -212,6 +231,7 @@ const pesquisarReservas = () => {
   );
 
   mostrarNaTabela(ordenar(encontradas), linhaDaReserva, 'reserva', 'Nenhuma reserva encontrada.');
+  ligarLinksDosPets();
 };
 
 if (document.querySelector('input[name="selecionadas"]')) {
