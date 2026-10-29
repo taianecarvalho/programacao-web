@@ -27,7 +27,7 @@ const mostrarPet = (pet) => {
   mostrarNaFicha('raca', raca);
 
   const figura = document.querySelector('#ficha-foto').parentElement;
-  figura.innerHTML = `<img id="ficha-foto" src="${foto}" alt="${descricaoFoto}">`;
+  figura.innerHTML = `<img id="ficha-foto" src="${protegerTexto(foto)}" alt="${protegerTexto(descricaoFoto)}">`;
 
   mostrarReservasDoPet(pet);
 };
@@ -41,7 +41,7 @@ const preencherFormularioDoPet = (pet) => {
 
   const figura = document.querySelector('#foto-atual').parentElement;
   figura.innerHTML = `
-    <img id="foto-atual" src="${pet.foto}" alt="${pet.descricaoFoto}">
+    <img id="foto-atual" src="${protegerTexto(pet.foto)}" alt="${protegerTexto(pet.descricaoFoto)}">
     <figcaption>Imagem atual</figcaption>
   `;
 };
@@ -49,9 +49,9 @@ const preencherFormularioDoPet = (pet) => {
 const linhaDoPet = ({ id, nome, tipo, raca, tamanho }) => `
   <td><input type="checkbox" name="selecionados" value="${id}" title="Selecionar pet"></td>
   <td>${id}</td>
-  <td>${nome}</td>
+  <td>${protegerTexto(nome)}</td>
   <td>${nomesDeTipo[tipo]}</td>
-  <td>${raca}</td>
+  <td>${protegerTexto(raca)}</td>
   <td>${nomesDeTamanho[tamanho]}</td>
   <td>
     <a href="editar-pet.html">Editar</a>

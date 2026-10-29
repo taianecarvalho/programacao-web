@@ -10,6 +10,13 @@ const dataDeHoje = () => {
   return `${hoje.getFullYear()}-${mes}-${dia}`;
 };
 
+const protegerTexto = (texto) => `${texto}`
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#39;');
+
 const guardarAoClicar = (links, chave, id) => {
   links.forEach((link) => {
     link.addEventListener('click', () => {

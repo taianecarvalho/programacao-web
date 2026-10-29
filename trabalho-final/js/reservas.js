@@ -11,7 +11,7 @@ const mostrarImagensDaReserva = (imagens) => {
 
   imagens.forEach(({ foto, descricao }) => {
     const item = document.createElement('li');
-    item.innerHTML = `<img src="${foto}" alt="${descricao}">`;
+    item.innerHTML = `<img src="${protegerTexto(foto)}" alt="${protegerTexto(descricao)}">`;
     galeria.appendChild(item);
   });
 
@@ -37,7 +37,7 @@ const nomeDoPet = (petId) => {
 
 const mostrarPetNaFicha = (petId) => {
   const campo = document.querySelector('#ficha-pet');
-  campo.innerHTML = `<a href="ver-pet.html">${nomeDoPet(petId)}</a>`;
+  campo.innerHTML = `<a href="ver-pet.html">${protegerTexto(nomeDoPet(petId))}</a>`;
   guardarAoClicar(campo.querySelectorAll('a'), 'pet', petId);
 };
 
@@ -63,7 +63,7 @@ const mostrarReserva = (reserva) => {
 const mostrarRecibo = (arquivo, nome = arquivo) => {
   const recibo = document.querySelector('#ficha-recibo');
   if (arquivo) {
-    recibo.innerHTML = `<a href="${enderecoDoArquivo(arquivo)}" target="_blank">${nome}</a>`;
+    recibo.innerHTML = `<a href="${enderecoDoArquivo(arquivo)}" target="_blank">${protegerTexto(nome)}</a>`;
   } else {
     recibo.textContent = '-';
   }
@@ -214,7 +214,7 @@ const linkDeEditar = (status) => {
 const linhaDaReserva = ({ id, petId, pet, chegada, partida, status, total }) => `
   <td><input type="checkbox" name="selecionadas" value="${id}" title="Selecionar reserva"></td>
   <td>${id}</td>
-  <td><a href="ver-pet.html" class="nome-pet" data-pet="${petId}">${pet}</a></td>
+  <td><a href="ver-pet.html" class="nome-pet" data-pet="${petId}">${protegerTexto(pet)}</a></td>
   <td>${formatarData(chegada)}</td>
   <td>${formatarData(partida)}</td>
   <td><div class="etiqueta ${classesDeStatus[status]}">${status}</div></td>

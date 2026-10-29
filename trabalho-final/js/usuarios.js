@@ -22,11 +22,11 @@ const dataDeCriacao = (criado) => {
 
 const linhaDoUsuario = ({ id, nome, sobrenome, email, telefone, funcao, status, foto = 'imagens/avatar.svg', criado = '' }) => `
   <td><input type="checkbox" name="selecionados" value="${id}" title="Selecionar usuário"></td>
-  <td><img src="${foto}" alt="" class="foto-usuario"></td>
+  <td><img src="${protegerTexto(foto)}" alt="" class="foto-usuario"></td>
   <td>${id}</td>
-  <td>${nome} ${sobrenome}</td>
-  <td>${email}</td>
-  <td>${telefone}</td>
+  <td>${protegerTexto(`${nome} ${sobrenome}`)}</td>
+  <td>${protegerTexto(email)}</td>
+  <td>${protegerTexto(telefone)}</td>
   <td>${nomesDeFuncao[funcao]}</td>
   <td><div class="etiqueta ${status}">${nomesDeSituacao[status]}</div></td>
   <td>${dataDeCriacao(criado)}</td>
@@ -180,9 +180,9 @@ const ligarRemocao = () => {
 };
 
 const linhaDoPetDoUsuario = ({ nome, tipo, raca }) => `
-  <td>${nome}</td>
+  <td>${protegerTexto(nome)}</td>
   <td>${nomesDeTipo[tipo]}</td>
-  <td>${raca}</td>
+  <td>${protegerTexto(raca)}</td>
   <td><a href="ver-pet.html">Visualizar</a></td>
 `;
 
@@ -205,7 +205,7 @@ const mostrarUsuario = (usuario) => {
     `<div class="etiqueta ${status}">${nomesDeSituacao[status]}</div>`;
 
   const figura = document.querySelector('#ficha-foto').parentElement;
-  figura.innerHTML = `<img id="ficha-foto" src="${foto}" alt="Foto de ${nome} ${sobrenome}">`;
+  figura.innerHTML = `<img id="ficha-foto" src="${protegerTexto(foto)}" alt="${protegerTexto(`Foto de ${nome} ${sobrenome}`)}">`;
 
   mostrarPetsDoUsuario(usuario);
 };
