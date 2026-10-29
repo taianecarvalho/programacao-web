@@ -128,7 +128,70 @@ const carregarDados = (chave, dadosIniciais) => {
 };
 
 const salvarDados = (chave, dados) => {
-  localStorage.setItem(chave, JSON.stringify(dados));
+  try {
+    localStorage.setItem(chave, JSON.stringify(dados));
+    return true;
+  } catch (erro) {
+    alert('O navegador não tem mais espaço para guardar os dados. Use arquivos menores.');
+    return false;
+  }
+};
+
+const arquivosEscolhidos = {};
+
+const reduzirImagem = (arquivo, guardar) => {
+  const leitor = new FileReader();
+  leitor.addEventListener('load', () => {
+    const imagem = new Image();
+    imagem.addEventListener('load', () => {
+      const escala = Math.min(1, 400 / Math.max(imagem.width, imagem.height));
+      const tela = document.createElement('canvas');
+      tela.width = Math.round(imagem.width * escala);
+      tela.height = Math.round(imagem.height * escala);
+      tela.getContext('2d').drawImage(imagem, 0, 0, tela.width, tela.height);
+      guardar(tela.toDataURL('image/jpeg', 0.8));
+    });
+    imagem.src = leitor.result;
+  });
+  leitor.readAsDataURL(arquivo);
+};
+
+const lerPdf = (arquivo, guardar) => {
+  if (arquivo.size > 1024 * 1024) {
+    alert('O recibo precisa ter até 1 MB.');
+    return;
+  }
+  const leitor = new FileReader();
+  leitor.addEventListener('load', () => guardar(leitor.result));
+  leitor.readAsDataURL(arquivo);
+};
+
+const ligarArquivo = (campo) => {
+  campo.addEventListener('change', () => {
+    delete arquivosEscolhidos[campo.name];
+    const [arquivo] = campo.files;
+    if (!arquivo) {
+      return;
+    }
+    const guardar = (conteudo) => {
+      arquivosEscolhidos[campo.name] = { nome: arquivo.name, conteudo };
+    };
+    if (arquivo.type === 'application/pdf') {
+      lerPdf(arquivo, guardar);
+    } else {
+      reduzirImagem(arquivo, guardar);
+    }
+  });
+};
+
+const enderecoDoArquivo = (arquivo) => {
+  if (!arquivo.startsWith('data:')) {
+    return arquivo;
+  }
+  const [cabecalho, conteudo] = arquivo.split(',');
+  const tipo = cabecalho.slice(5, cabecalho.indexOf(';'));
+  const bytes = Uint8Array.from(atob(conteudo), (letra) => letra.charCodeAt(0));
+  return URL.createObjectURL(new Blob([bytes], { type: tipo }));
 };
 
 const novoId = (lista) => {
@@ -183,8 +246,13 @@ if (botaoLimpar) {
     document.querySelectorAll('form.formulario [name]').forEach((campo) => {
       campo.value = '';
     });
+    Object.keys(arquivosEscolhidos).forEach((nome) => {
+      delete arquivosEscolhidos[nome];
+    });
   });
 }
+
+document.querySelectorAll('input[type="file"]').forEach(ligarArquivo);
 
 const sair = document.querySelector('.topo a[href="index.html"]');
 if (sair) {

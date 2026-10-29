@@ -56,14 +56,14 @@ const mostrarReserva = (reserva) => {
   document.querySelector('#ficha-status').innerHTML =
     `<div class="etiqueta ${classesDeStatus[reserva.status]}">${reserva.status}</div>`;
 
-  mostrarRecibo(reserva.recibo);
+  mostrarRecibo(reserva.recibo, reserva.nomeDoRecibo);
   mostrarImagensDaReserva(reserva.imagens);
 };
 
-const mostrarRecibo = (arquivo) => {
+const mostrarRecibo = (arquivo, nome = arquivo) => {
   const recibo = document.querySelector('#ficha-recibo');
   if (arquivo) {
-    recibo.innerHTML = `<a href="${arquivo}" target="_blank">${arquivo}</a>`;
+    recibo.innerHTML = `<a href="${enderecoDoArquivo(arquivo)}" target="_blank">${nome}</a>`;
   } else {
     recibo.textContent = '-';
   }
@@ -133,7 +133,7 @@ const preencherFormularioDaReserva = (reserva) => {
   preencherLista('status', reserva.status);
   preencherAreaDeTexto('anotacoes', reserva.anotacoes);
   mostrarImagensDaReserva(reserva.imagens);
-  mostrarRecibo(reserva.recibo);
+  mostrarRecibo(reserva.recibo, reserva.nomeDoRecibo);
 };
 
 const lerFormularioDaReserva = (reserva) => {
@@ -174,6 +174,17 @@ const cadastrarReserva = () => {
   salvarDados('reservas', reservas);
 };
 
+const guardarArquivosDaReserva = (reserva) => {
+  const { imagens, nota } = arquivosEscolhidos;
+  if (imagens && reserva.status === 'Em progresso') {
+    reserva.imagens.push({ foto: imagens.conteudo, descricao: `Foto da estadia de ${nomeDoPet(reserva.petId)}` });
+  }
+  if (nota && reserva.status === 'Finalizada') {
+    reserva.recibo = nota.conteudo;
+    reserva.nomeDoRecibo = nota.nome;
+  }
+};
+
 const atualizarReserva = () => {
   if (!periodoValido()) {
     return false;
@@ -184,7 +195,8 @@ const atualizarReserva = () => {
   reserva.status = valorDoCampo('status');
   reserva.anotacoes = valorDoCampo('anotacoes');
   reserva.atualizado = dataDeHoje();
-  salvarDados('reservas', reservas);
+  guardarArquivosDaReserva(reserva);
+  return salvarDados('reservas', reservas);
 };
 
 const deletarReserva = (reserva) => {

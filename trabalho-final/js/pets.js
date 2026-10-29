@@ -95,17 +95,26 @@ const lerFormularioDoPet = (pet) => {
   pet.proprietario = valorDoCampo('proprietario');
 };
 
+const trocarFotoDoPet = (pet) => {
+  if (arquivosEscolhidos.imagem) {
+    pet.foto = arquivosEscolhidos.imagem.conteudo;
+    pet.descricaoFoto = `Foto de ${pet.nome}`;
+  }
+};
+
 const cadastrarPet = () => {
   const pet = { id: novoId(pets), foto: 'imagens/avatar.svg' };
   lerFormularioDoPet(pet);
   pet.descricaoFoto = `${pet.nome}, sem foto cadastrada`;
+  trocarFotoDoPet(pet);
   pets.push(pet);
-  salvarDados('pets', pets);
+  return salvarDados('pets', pets);
 };
 
 const atualizarPet = () => {
   const pet = buscarSelecionado(pets, 'pet');
   lerFormularioDoPet(pet);
+  trocarFotoDoPet(pet);
 
   reservas.forEach((reserva) => {
     if (reserva.petId === pet.id) {
@@ -113,8 +122,7 @@ const atualizarPet = () => {
     }
   });
 
-  salvarDados('pets', pets);
-  salvarDados('reservas', reservas);
+  return salvarDados('pets', pets) && salvarDados('reservas', reservas);
 };
 
 const deletarPet = (pet) => {

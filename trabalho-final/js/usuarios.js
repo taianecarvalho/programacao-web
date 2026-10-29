@@ -50,11 +50,18 @@ const lerFormularioDoUsuario = (usuario) => {
   usuario.status = valorDoCampo('status');
 };
 
+const trocarFotoDoUsuario = (usuario) => {
+  if (arquivosEscolhidos.foto) {
+    usuario.foto = arquivosEscolhidos.foto.conteudo;
+  }
+};
+
 const cadastrarUsuario = () => {
   const usuario = { id: novoId(usuarios), foto: 'imagens/avatar.svg', criado: dataDeHoje() };
   lerFormularioDoUsuario(usuario);
+  trocarFotoDoUsuario(usuario);
   usuarios.push(usuario);
-  salvarDados('usuarios', usuarios);
+  return salvarDados('usuarios', usuarios);
 };
 
 const nomeCompleto = ({ nome, sobrenome }) => `${nome} ${sobrenome}`;
@@ -78,8 +85,9 @@ const atualizarUsuario = () => {
   const usuario = buscarSelecionado(usuarios, 'usuario');
   const nomeAntigo = nomeCompleto(usuario);
   lerFormularioDoUsuario(usuario);
+  trocarFotoDoUsuario(usuario);
   trocarProprietario(nomeAntigo, nomeCompleto(usuario));
-  salvarDados('usuarios', usuarios);
+  return salvarDados('usuarios', usuarios);
 };
 
 const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerente') || usuarios[0];
@@ -88,8 +96,9 @@ const atualizarPerfil = () => {
   const perfil = buscarPerfil();
   const nomeAntigo = nomeCompleto(perfil);
   lerDadosPessoais(perfil);
+  trocarFotoDoUsuario(perfil);
   trocarProprietario(nomeAntigo, nomeCompleto(perfil));
-  salvarDados('usuarios', usuarios);
+  return salvarDados('usuarios', usuarios);
 };
 
 const criarConta = () => {
