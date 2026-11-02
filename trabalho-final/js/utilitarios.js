@@ -248,6 +248,8 @@ const nomeDoDono = (pet) => {
 
 const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerente') || usuarios[0];
 
+const numeroDigitado = (texto) => parseFloat(texto.replace('R$', '').replace(',', '.'));
+
 pets.forEach((pet) => {
   if (pet.proprietarioId === undefined) {
     const dono = usuarios.find((usuario) => nomeCompleto(usuario) === pet.proprietario) || { id: '' };

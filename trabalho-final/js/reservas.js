@@ -288,8 +288,8 @@ const pesquisarReservas = () => {
     (chegada === '' || reserva.chegada >= chegada) &&
     (partida === '' || reserva.partida <= partida) &&
     contem(reserva.proprietario, proprietario) &&
-    (totalMinimo === '' || reserva.valor >= parseFloat(totalMinimo)) &&
-    (totalMaximo === '' || reserva.valor <= parseFloat(totalMaximo)) &&
+    (totalMinimo === '' || reserva.valor >= numeroDigitado(totalMinimo)) &&
+    (totalMaximo === '' || reserva.valor <= numeroDigitado(totalMaximo)) &&
     (status === '' || classesDeStatus[reserva.status] === status) &&
     contem(reserva.pet, pet)
   );
@@ -298,7 +298,7 @@ const pesquisarReservas = () => {
   ligarLinksDosPets();
 };
 
-if (document.querySelector('input[name="selecionadas"]')) {
+if (estaNaTela('Reservas')) {
   ligarOrdenacao(['id', 'pet', 'chegada', 'partida', 'status', 'valor'], pesquisarReservas);
   ligarPesquisa(pesquisarReservas);
 }

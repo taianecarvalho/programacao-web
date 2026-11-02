@@ -13,3 +13,11 @@ iconeMostrarSenha.addEventListener('click', () => {
             <input type="${tipo}" placeholder="Senha" required>`;
   rotuloSenha.querySelector('input').value = senhaDigitada;
 });
+
+const esqueciSenha = document.querySelector('#esqueci-senha');
+if (esqueciSenha) {
+  esqueciSenha.addEventListener('click', (evento) => {
+    evento.preventDefault();
+    alert('Procure o gerente do hotel para redefinir a sua senha.');
+  });
+}
