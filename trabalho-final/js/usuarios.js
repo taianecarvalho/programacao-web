@@ -149,11 +149,19 @@ const avisarQueTemPets = (comPets) => {
 
 const removerMarcados = () => {
   const marcados = idsMarcados();
+  if (marcados.length === 0) {
+    alert('Marque pelo menos um usuário para remover.');
+    return false;
+  }
   const comPets = usuarios.filter((usuario) => estaMarcado(usuario, marcados) && petsDoUsuario(usuario).length > 0);
   if (comPets.length > 0) {
     avisarQueTemPets(comPets);
   }
   const restantes = usuarios.filter((usuario) => !estaMarcado(usuario, marcados) || petsDoUsuario(usuario).length > 0);
+  const quantidade = usuarios.length - restantes.length;
+  if (quantidade === 0 || !confirm(`Deseja remover ${quantidade} usuário(s) marcado(s)?`)) {
+    return false;
+  }
   salvarDados('usuarios', restantes);
 };
 
@@ -161,13 +169,20 @@ const ligarAcoesDosMarcados = () => {
   const [botaoAtivar, botaoInativar, botaoRemover] = document.querySelectorAll('input[name="acao"]');
   botaoAtivar.addEventListener('click', () => mudarStatusDosMarcados('ativo'));
   botaoInativar.addEventListener('click', () => mudarStatusDosMarcados('inativo'));
-  botaoRemover.addEventListener('click', removerMarcados);
+  botaoRemover.addEventListener('click', (evento) => {
+    if (removerMarcados() === false) {
+      evento.preventDefault();
+    }
+  });
 };
 
 const deletarUsuario = (usuario) => {
   if (petsDoUsuario(usuario).length > 0) {
     avisarQueTemPets([usuario]);
-    return;
+    return false;
+  }
+  if (!confirm(`Deseja remover o usuário ${nomeCompleto(usuario)}?`)) {
+    return false;
   }
   const restantes = usuarios.filter((item) => item.id !== usuario.id);
   salvarDados('usuarios', restantes);
@@ -175,7 +190,11 @@ const deletarUsuario = (usuario) => {
 
 const ligarRemocao = () => {
   document.querySelectorAll('tbody a[href="usuarios.html"]').forEach((link) => {
-    link.addEventListener('click', () => deletarUsuario(buscarSelecionado(usuarios, 'usuario')));
+    link.addEventListener('click', (evento) => {
+      if (deletarUsuario(buscarSelecionado(usuarios, 'usuario')) === false) {
+        evento.preventDefault();
+      }
+    });
   });
 };
 

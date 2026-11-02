@@ -224,7 +224,11 @@ const aoSalvar = (salvar) => {
 
 const aoDeletar = (deletar) => {
   const botaoDeletar = document.querySelector('.acoes-topo a:last-child');
-  botaoDeletar.addEventListener('click', deletar);
+  botaoDeletar.addEventListener('click', (evento) => {
+    if (deletar() === false) {
+      evento.preventDefault();
+    }
+  });
 };
 
 const pets = carregarDados('pets', petsIniciais);

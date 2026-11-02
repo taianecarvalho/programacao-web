@@ -211,6 +211,9 @@ const atualizarReserva = () => {
 };
 
 const deletarReserva = (reserva) => {
+  if (!confirm(`Deseja deletar a reserva ${reserva.id}?`)) {
+    return false;
+  }
   const restantes = reservas.filter((item) => item.id !== reserva.id);
   salvarDados('reservas', restantes);
 };

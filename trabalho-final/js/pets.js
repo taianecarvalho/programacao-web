@@ -134,7 +134,10 @@ const deletarPet = (pet) => {
   const reservasDoPet = reservas.filter((reserva) => reserva.petId === pet.id);
   if (reservasDoPet.length > 0) {
     alert(`O pet ${pet.nome} tem reservas e não pode ser deletado.`);
-    return;
+    return false;
+  }
+  if (!confirm(`Deseja deletar o pet ${pet.nome}?`)) {
+    return false;
   }
   const restantes = pets.filter((item) => item.id !== pet.id);
   salvarDados('pets', restantes);
