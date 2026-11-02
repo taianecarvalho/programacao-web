@@ -251,13 +251,6 @@ const deletarReserva = (reserva) => {
   salvarDados('reservas', restantes);
 };
 
-const linkDeEditar = (status) => {
-  if (status === 'Finalizada') {
-    return '';
-  }
-  return '<a href="editar-reserva.html">Editar</a>';
-};
-
 const linhaDaReserva = ({ id, petId, pet, chegada, partida, status, total }) => `
   <td><input type="checkbox" name="selecionadas" value="${id}" title="Selecionar reserva"></td>
   <td>${id}</td>
@@ -267,7 +260,7 @@ const linhaDaReserva = ({ id, petId, pet, chegada, partida, status, total }) => 
   <td><div class="etiqueta ${classesDeStatus[status]}">${status}</div></td>
   <td class="valor">${total}</td>
   <td>
-    ${linkDeEditar(status)}
+    <a href="editar-reserva.html">Editar</a>
     <a href="ver-reserva.html">Visualizar</a>
   </td>
 `;
