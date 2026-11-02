@@ -165,8 +165,40 @@ const periodoValido = () => {
   return true;
 };
 
+const ocupaVaga = (status) => status === 'Reservada' || status === 'Em progresso';
+
+const diaSemVaga = (chegada, partida, idDaReserva) => {
+  const outras = reservas.filter((reserva) => reserva.id !== idDaReserva && ocupaVaga(reserva.status));
+  const dia = new Date(chegada);
+  const fim = new Date(partida);
+  while (dia < fim) {
+    const data = dia.toISOString().slice(0, 10);
+    const ocupadas = outras.filter((reserva) => reserva.chegada <= data && data < reserva.partida).length;
+    if (ocupadas >= configuracoes.vagas) {
+      return data;
+    }
+    dia.setUTCDate(dia.getUTCDate() + 1);
+  }
+  return '';
+};
+
+const periodoTemVaga = (idDaReserva) => {
+  const dia = diaSemVaga(valorDoCampo('chegada'), valorDoCampo('partida'), idDaReserva);
+  if (dia !== '') {
+    alert(`Não há vagas em ${formatarData(dia)}. A reserva não foi salva.`);
+    return false;
+  }
+  return true;
+};
+
+const precisaDeVaga = (reserva) => ocupaVaga(valorDoCampo('status')) && (
+  !ocupaVaga(reserva.status) ||
+  reserva.chegada !== valorDoCampo('chegada') ||
+  reserva.partida !== valorDoCampo('partida')
+);
+
 const cadastrarReserva = () => {
-  if (!periodoValido()) {
+  if (!periodoValido() || !periodoTemVaga('')) {
     return false;
   }
   const reserva = {
@@ -200,6 +232,9 @@ const atualizarReserva = () => {
     return false;
   }
   const reserva = buscarSelecionado(reservas, 'reserva');
+  if (precisaDeVaga(reserva) && !periodoTemVaga(reserva.id)) {
+    return false;
+  }
   lerFormularioDaReserva(reserva);
   reserva.status = valorDoCampo('status');
   reserva.anotacoes = valorDoCampo('anotacoes');
