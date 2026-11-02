@@ -301,5 +301,6 @@ if (sair) {
     localStorage.removeItem('pet');
     localStorage.removeItem('reserva');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('visualizarPor');
   });
 }

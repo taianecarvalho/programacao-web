@@ -11,7 +11,7 @@ const preencherFormularioDoUsuario = (usuario) => {
   preencherLista('status', usuario.status);
 };
 
-let visualizarPor = 'Usuários';
+let visualizarPor = localStorage.getItem('visualizarPor') || 'Usuários';
 
 const dataDeCriacao = (criado) => {
   if (criado) {
@@ -243,10 +243,12 @@ const pesquisarUsuarios = () => {
 const ligarVisualizacao = () => {
   const botoes = document.querySelectorAll('.visualizar input');
   botoes.forEach((botao) => {
+    botao.classList.toggle('principal', botao.value === visualizarPor);
     botao.addEventListener('click', () => {
       botoes.forEach((item) => item.classList.remove('principal'));
       botao.classList.add('principal');
       visualizarPor = botao.value;
+      localStorage.setItem('visualizarPor', visualizarPor);
       pesquisarUsuarios();
     });
   });
