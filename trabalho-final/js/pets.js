@@ -1,9 +1,13 @@
 const mostrarReservasDoPet = (pet) => {
   const corpo = document.querySelector('#reservas-do-pet');
+  const reservasDoPet = reservas.filter((reserva) => reserva.petId === pet.id);
   corpo.innerHTML = '';
 
-  reservas
-    .filter((reserva) => reserva.petId === pet.id)
+  if (reservasDoPet.length === 0) {
+    document.querySelector('#aviso').textContent = 'Nenhuma reserva para este pet.';
+  }
+
+  reservasDoPet
     .forEach((reserva) => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
@@ -18,13 +22,14 @@ const mostrarReservasDoPet = (pet) => {
 };
 
 const mostrarPet = (pet) => {
-  const { id, nome, tipo, raca, proprietario, foto, descricaoFoto } = pet;
+  const { id, nome, tipo, raca, tamanho, proprietario, foto, descricaoFoto } = pet;
 
   mostrarNaFicha('proprietario', proprietario);
   mostrarNaFicha('id', id);
   mostrarNaFicha('nome', nome);
   mostrarNaFicha('tipo', nomesDeTipo[tipo]);
   mostrarNaFicha('raca', raca);
+  mostrarNaFicha('tamanho', nomesDeTamanho[tamanho]);
 
   const figura = document.querySelector('#ficha-foto').parentElement;
   figura.innerHTML = `<img id="ficha-foto" src="${protegerTexto(foto)}" alt="${protegerTexto(descricaoFoto)}">`;
