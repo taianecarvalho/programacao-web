@@ -38,7 +38,7 @@ const nomeDoPet = (petId) => {
 const proprietarioDoPet = (petId) => {
   const pet = pets.find((item) => item.id === petId);
   if (pet) {
-    return pet.proprietario;
+    return nomeDoDono(pet);
   }
   return '';
 };
@@ -55,7 +55,7 @@ const mostrarPetNaFicha = (petId) => {
 
 const mostrarReserva = (reserva) => {
   mostrarNaFicha('id', reserva.id);
-  mostrarNaFicha('proprietario', reserva.proprietario);
+  mostrarNaFicha('proprietario', proprietarioDoPet(reserva.petId));
   mostrarPetNaFicha(reserva.petId);
   mostrarNaFicha('chegada', formatarData(reserva.chegada));
   mostrarNaFicha('partida', formatarData(reserva.partida));
@@ -180,7 +180,6 @@ const cadastrarReserva = () => {
     imagens: []
   };
   lerFormularioDaReserva(reserva);
-  reserva.proprietario = proprietarioDoPet(reserva.petId);
   reservas.push(reserva);
   salvarDados('reservas', reservas);
 };
@@ -202,7 +201,6 @@ const atualizarReserva = () => {
   }
   const reserva = buscarSelecionado(reservas, 'reserva');
   lerFormularioDaReserva(reserva);
-  reserva.proprietario = proprietarioDoPet(reserva.petId);
   reserva.status = valorDoCampo('status');
   reserva.anotacoes = valorDoCampo('anotacoes');
   reserva.atualizado = dataDeHoje();
@@ -255,7 +253,7 @@ const pesquisarReservas = () => {
   const status = valorPesquisado('status');
   const pet = valorPesquisado('pet');
 
-  const comNomeDoPet = reservas.map((reserva) => ({ ...reserva, pet: nomeDoPet(reserva.petId) }));
+  const comNomeDoPet = reservas.map((reserva) => ({ ...reserva, pet: nomeDoPet(reserva.petId), proprietario: proprietarioDoPet(reserva.petId) }));
 
   const encontradas = comNomeDoPet.filter((reserva) =>
     contem(reserva.id, id) &&

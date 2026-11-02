@@ -22,9 +22,9 @@ const mostrarReservasDoPet = (pet) => {
 };
 
 const mostrarPet = (pet) => {
-  const { id, nome, tipo, raca, tamanho, proprietario, foto, descricaoFoto } = pet;
+  const { id, nome, tipo, raca, tamanho, foto, descricaoFoto } = pet;
 
-  mostrarNaFicha('proprietario', proprietario);
+  mostrarNaFicha('proprietario', nomeDoDono(pet));
   mostrarNaFicha('id', id);
   mostrarNaFicha('nome', nome);
   mostrarNaFicha('tipo', nomesDeTipo[tipo]);
@@ -42,7 +42,7 @@ const preencherFormularioDoPet = (pet) => {
   preencherLista('tipo', pet.tipo);
   preencherTexto('raca', pet.raca);
   preencherLista('tamanho', pet.tamanho);
-  preencherLista('proprietario', pet.proprietario);
+  preencherLista('proprietario', pet.proprietarioId);
 
   const figura = document.querySelector('#foto-atual').parentElement;
   figura.innerHTML = `
@@ -80,14 +80,14 @@ const pesquisarPets = () => {
   mostrarNaTabela(ordenar(encontrados), linhaDoPet, 'pet', 'Nenhum pet encontrado.');
 };
 
-const listarClientesNoCampo = () => {
+const listarClientesNoCampo = (idDoDonoAtual) => {
   const campo = document.querySelector('select[name="proprietario"]');
   usuarios
-    .filter((usuario) => usuario.funcao === 'cliente')
-    .forEach(({ nome, sobrenome }) => {
+    .filter((usuario) => (usuario.funcao === 'cliente' && usuario.status === 'ativo') || usuario.id === idDoDonoAtual)
+    .forEach((usuario) => {
       const opcao = document.createElement('option');
-      opcao.value = `${nome} ${sobrenome}`;
-      opcao.textContent = `${nome} ${sobrenome}`;
+      opcao.value = usuario.id;
+      opcao.textContent = nomeCompleto(usuario);
       campo.appendChild(opcao);
     });
 };
@@ -97,7 +97,7 @@ const lerFormularioDoPet = (pet) => {
   pet.tipo = valorDoCampo('tipo');
   pet.raca = valorDoCampo('raca');
   pet.tamanho = valorDoCampo('tamanho');
-  pet.proprietario = valorDoCampo('proprietario');
+  pet.proprietarioId = valorDoCampo('proprietario');
 };
 
 const trocarFotoDoPet = (pet) => {
@@ -120,14 +120,7 @@ const atualizarPet = () => {
   const pet = buscarSelecionado(pets, 'pet');
   lerFormularioDoPet(pet);
   trocarFotoDoPet(pet);
-
-  reservas.forEach((reserva) => {
-    if (reserva.petId === pet.id) {
-      reserva.proprietario = pet.proprietario;
-    }
-  });
-
-  return salvarDados('pets', pets) && salvarDados('reservas', reservas);
+  return salvarDados('pets', pets);
 };
 
 const deletarPet = (pet) => {
@@ -143,7 +136,7 @@ const deletarPet = (pet) => {
   salvarDados('pets', restantes);
 };
 
-if (document.querySelector('input[name="selecionados"]')) {
+if (estaNaTela('Pets')) {
   ligarOrdenacao(['id', 'nome', 'tipo', 'raca', 'tamanho'], pesquisarPets);
   ligarPesquisa(pesquisarPets);
 }
@@ -160,7 +153,8 @@ if (estaNaTela('Novo Pet')) {
 }
 
 if (estaNaTela('Editar Pet')) {
-  listarClientesNoCampo();
-  preencherFormularioDoPet(buscarSelecionado(pets, 'pet'));
+  const pet = buscarSelecionado(pets, 'pet');
+  listarClientesNoCampo(pet.proprietarioId);
+  preencherFormularioDoPet(pet);
   aoSalvar(atualizarPet);
 }

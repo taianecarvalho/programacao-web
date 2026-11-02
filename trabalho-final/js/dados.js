@@ -5,7 +5,7 @@ const petsIniciais = [
     tipo: 'cachorro',
     raca: 'Golden Retriever',
     tamanho: 'grande',
-    proprietario: 'José da Silva',
+    proprietarioId: '9087653',
     foto: 'imagens/pet-anya.jpg',
     descricaoFoto: 'Anya, cadela da raça Golden Retriever, deitada na grama'
   },
@@ -15,7 +15,7 @@ const petsIniciais = [
     tipo: 'cachorro',
     raca: 'Cavalier King Charles',
     tamanho: 'pequeno',
-    proprietario: 'José da Silva',
+    proprietarioId: '9087653',
     foto: 'imagens/pet-maya.jpg',
     descricaoFoto: 'Maya, cadela da raça Cavalier King Charles'
   }
@@ -25,7 +25,6 @@ const reservasIniciais = [
   {
     id: '1234099871',
     petId: '12349984501',
-    proprietario: 'José da Silva',
     chegada: '2026-05-02',
     partida: '2026-05-07',
     status: 'Reservada',
@@ -42,7 +41,6 @@ const reservasIniciais = [
   {
     id: '1234099872',
     petId: '12349984502',
-    proprietario: 'José da Silva',
     chegada: '2026-05-02',
     partida: '2026-05-07',
     status: 'Em progresso',
@@ -59,7 +57,6 @@ const reservasIniciais = [
   {
     id: '1234099873',
     petId: '12349984501',
-    proprietario: 'José da Silva',
     chegada: '2026-05-02',
     partida: '2026-05-07',
     status: 'Finalizada',

@@ -236,7 +236,26 @@ const reservas = carregarDados('reservas', reservasIniciais);
 const usuarios = carregarDados('usuarios', usuariosIniciais);
 const configuracoes = carregarDados('configuracoes', configuracoesIniciais);
 
+const nomeCompleto = ({ nome, sobrenome }) => `${nome} ${sobrenome}`.trim();
+
+const nomeDoDono = (pet) => {
+  const dono = usuarios.find((usuario) => usuario.id === pet.proprietarioId);
+  if (dono) {
+    return nomeCompleto(dono);
+  }
+  return '';
+};
+
+pets.forEach((pet) => {
+  if (pet.proprietarioId === undefined) {
+    const dono = usuarios.find((usuario) => nomeCompleto(usuario) === pet.proprietario) || { id: '' };
+    pet.proprietarioId = dono.id;
+    delete pet.proprietario;
+  }
+});
+
 reservas.forEach((reserva) => {
+  delete reserva.proprietario;
   if (reserva.petId === undefined) {
     const pet = pets.find((item) => item.nome === reserva.pet) || { id: '' };
     reserva.petId = pet.id;

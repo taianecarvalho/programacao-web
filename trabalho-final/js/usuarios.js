@@ -64,29 +64,10 @@ const cadastrarUsuario = () => {
   return salvarDados('usuarios', usuarios);
 };
 
-const nomeCompleto = ({ nome, sobrenome }) => `${nome} ${sobrenome}`;
-
-const trocarProprietario = (nomeAntigo, nomeNovo) => {
-  pets.forEach((pet) => {
-    if (pet.proprietario === nomeAntigo) {
-      pet.proprietario = nomeNovo;
-    }
-  });
-  reservas.forEach((reserva) => {
-    if (reserva.proprietario === nomeAntigo) {
-      reserva.proprietario = nomeNovo;
-    }
-  });
-  salvarDados('pets', pets);
-  salvarDados('reservas', reservas);
-};
-
 const atualizarUsuario = () => {
   const usuario = buscarSelecionado(usuarios, 'usuario');
-  const nomeAntigo = nomeCompleto(usuario);
   lerFormularioDoUsuario(usuario);
   trocarFotoDoUsuario(usuario);
-  trocarProprietario(nomeAntigo, nomeCompleto(usuario));
   return salvarDados('usuarios', usuarios);
 };
 
@@ -94,10 +75,8 @@ const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerent
 
 const atualizarPerfil = () => {
   const perfil = buscarPerfil();
-  const nomeAntigo = nomeCompleto(perfil);
   lerDadosPessoais(perfil);
   trocarFotoDoUsuario(perfil);
-  trocarProprietario(nomeAntigo, nomeCompleto(perfil));
   return salvarDados('usuarios', usuarios);
 };
 
@@ -140,7 +119,7 @@ const mudarStatusDosMarcados = (status) => {
   salvarDados('usuarios', usuarios);
 };
 
-const petsDoUsuario = (usuario) => pets.filter((pet) => pet.proprietario === nomeCompleto(usuario));
+const petsDoUsuario = (usuario) => pets.filter((pet) => pet.proprietarioId === usuario.id);
 
 const avisarQueTemPets = (comPets) => {
   const nomes = comPets.map(nomeCompleto).join(', ');
