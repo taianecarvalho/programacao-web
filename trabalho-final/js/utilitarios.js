@@ -246,6 +246,8 @@ const nomeDoDono = (pet) => {
   return '';
 };
 
+const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerente') || usuarios[0];
+
 pets.forEach((pet) => {
   if (pet.proprietarioId === undefined) {
     const dono = usuarios.find((usuario) => nomeCompleto(usuario) === pet.proprietario) || { id: '' };
@@ -265,6 +267,13 @@ reservas.forEach((reserva) => {
     reserva.diaria = configuracoes.diaria;
   }
 });
+
+const linkDoPerfil = document.querySelector('.topo a[href="editar-perfil.html"]');
+const perfilDoTopo = buscarPerfil();
+if (linkDoPerfil && perfilDoTopo) {
+  const { foto = 'imagens/avatar.svg' } = perfilDoTopo;
+  linkDoPerfil.innerHTML = `<img src="${protegerTexto(foto)}" alt=""> ${protegerTexto(nomeCompleto(perfilDoTopo))}`;
+}
 
 document.querySelectorAll('input[type="date"]').forEach((campo) => {
   campo.addEventListener('click', () => campo.showPicker());

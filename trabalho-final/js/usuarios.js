@@ -71,8 +71,6 @@ const atualizarUsuario = () => {
   return salvarDados('usuarios', usuarios);
 };
 
-const buscarPerfil = () => usuarios.find((usuario) => usuario.funcao === 'gerente') || usuarios[0];
-
 const atualizarPerfil = () => {
   const perfil = buscarPerfil();
   lerDadosPessoais(perfil);
