@@ -35,6 +35,18 @@ const nomeDoPet = (petId) => {
   return '';
 };
 
+const proprietarioDoPet = (petId) => {
+  const pet = pets.find((item) => item.id === petId);
+  if (pet) {
+    return pet.proprietario;
+  }
+  return '';
+};
+
+const mostrarProprietario = () => {
+  preencherTexto('proprietario', proprietarioDoPet(valorDoCampo('pet')));
+};
+
 const mostrarPetNaFicha = (petId) => {
   const campo = document.querySelector('#ficha-pet');
   campo.innerHTML = `<a href="ver-pet.html">${protegerTexto(nomeDoPet(petId))}</a>`;
@@ -125,8 +137,8 @@ const ligarTotal = () => {
 };
 
 const preencherFormularioDaReserva = (reserva) => {
-  preencherTexto('proprietario', reserva.proprietario);
   preencherLista('pet', reserva.petId);
+  mostrarProprietario();
   preencherTexto('chegada', reserva.chegada);
   preencherTexto('partida', reserva.partida);
   preencherAreaDeTexto('notas', reserva.notas);
@@ -168,8 +180,7 @@ const cadastrarReserva = () => {
     imagens: []
   };
   lerFormularioDaReserva(reserva);
-  const pet = pets.find((item) => item.id === reserva.petId);
-  reserva.proprietario = pet.proprietario;
+  reserva.proprietario = proprietarioDoPet(reserva.petId);
   reservas.push(reserva);
   salvarDados('reservas', reservas);
 };
@@ -191,7 +202,7 @@ const atualizarReserva = () => {
   }
   const reserva = buscarSelecionado(reservas, 'reserva');
   lerFormularioDaReserva(reserva);
-  reserva.proprietario = valorDoCampo('proprietario');
+  reserva.proprietario = proprietarioDoPet(reserva.petId);
   reserva.status = valorDoCampo('status');
   reserva.anotacoes = valorDoCampo('anotacoes');
   reserva.atualizado = dataDeHoje();
@@ -280,6 +291,7 @@ if (estaNaTela('Editar reserva')) {
   diariaDoFormulario = reserva.diaria;
   listarPetsNoCampo();
   preencherFormularioDaReserva(reserva);
+  document.querySelector('select[name="pet"]').addEventListener('change', mostrarProprietario);
   ligarEstado();
   ligarTotal();
   aoSalvar(atualizarReserva);

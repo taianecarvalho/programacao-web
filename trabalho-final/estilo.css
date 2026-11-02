@@ -270,6 +270,13 @@ select {
   cursor: pointer;
 }
 
+input[readonly],
+input[readonly]:hover {
+  border-color: #e3e6e5;
+  background-color: #f9fbfa;
+  cursor: default;
+}
+
 input[type="text"]:hover,
 input[type="password"]:hover,
 input[type="email"]:hover,
